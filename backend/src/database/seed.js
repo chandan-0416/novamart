@@ -72,7 +72,7 @@ async function seed() {
       {
         name: 'Wireless Noise-Cancelling Headphones',
         description: 'Premium over-ear Bluetooth headphones with active noise cancellation and 30-hour battery life.',
-        price: 199.99,
+        price: 3499.00,
         stock_quantity: 50,
         category_id: catMap['Electronics'],
         image_url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80'
@@ -80,7 +80,7 @@ async function seed() {
       {
         name: 'Mechanical Gaming Keyboard',
         description: 'RGB backlit mechanical keyboard with hot-swappable tactile switches.',
-        price: 89.99,
+        price: 2499.00,
         stock_quantity: 40,
         category_id: catMap['Electronics'],
         image_url: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop&q=80'
@@ -88,7 +88,7 @@ async function seed() {
       {
         name: '4K Ultra HD Action Camera',
         description: 'Waterproof 4K sports action camera with dual color screens and image stabilization.',
-        price: 149.50,
+        price: 4999.00,
         stock_quantity: 25,
         category_id: catMap['Electronics'],
         image_url: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&auto=format&fit=crop&q=80'
@@ -96,7 +96,7 @@ async function seed() {
       {
         name: 'Organic Cotton Crewneck T-Shirt',
         description: 'Ultra-soft 100% organic cotton t-shirt with modern slim fit styling.',
-        price: 24.99,
+        price: 799.00,
         stock_quantity: 120,
         category_id: catMap['Clothing'],
         image_url: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80'
@@ -104,7 +104,7 @@ async function seed() {
       {
         name: 'Slim-Fit Stretch Denim Jeans',
         description: 'Classic durable denim with 2% elastane for comfortable everyday movement.',
-        price: 49.99,
+        price: 1499.00,
         stock_quantity: 80,
         category_id: catMap['Clothing'],
         image_url: 'https://images.unsplash.com/photo-1542272604-780c96856592?w=600&auto=format&fit=crop&q=80'
@@ -112,7 +112,7 @@ async function seed() {
       {
         name: 'Stainless Steel Pour-Over Coffee Maker',
         description: 'Thermal insulated stainless steel French press & pour-over coffee brewer.',
-        price: 34.99,
+        price: 1199.00,
         stock_quantity: 60,
         category_id: catMap['Home & Kitchen'],
         image_url: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=600&auto=format&fit=crop&q=80'
@@ -120,7 +120,7 @@ async function seed() {
       {
         name: 'Clean Code: A Handbook of Agile Software Craftsmanship',
         description: 'Essential software engineering guide for building maintainable, robust code.',
-        price: 38.50,
+        price: 699.00,
         stock_quantity: 100,
         category_id: catMap['Books'],
         image_url: 'https://images.unsplash.com/photo-1532012164546-f432f2e3edd4?w=600&auto=format&fit=crop&q=80'
@@ -128,7 +128,7 @@ async function seed() {
       {
         name: 'Stainless Steel Insulated Water Bottle (32oz)',
         description: 'Double-wall vacuum insulated sports water bottle keeping drinks cold for 24 hours.',
-        price: 18.99,
+        price: 599.00,
         stock_quantity: 90,
         category_id: catMap['Sports & Outdoors'],
         image_url: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&auto=format&fit=crop&q=80'
@@ -136,12 +136,21 @@ async function seed() {
     ];
 
     for (const p of products) {
-      await client.query(
-        `INSERT INTO products (name, description, price, stock_quantity, category_id, image_url, is_active)
-         VALUES ($1, $2, $3, $4, $5, $6, true)
-         ON CONFLICT DO NOTHING`,
-        [p.name, p.description, p.price, p.stock_quantity, p.category_id, p.image_url]
-      );
+      const existing = await client.query('SELECT id FROM products WHERE name = $1', [p.name]);
+      if (existing.rowCount > 0) {
+        await client.query(
+          `UPDATE products 
+           SET price = $1, description = $2, stock_quantity = $3, image_url = $4
+           WHERE name = $5`,
+          [p.price, p.description, p.stock_quantity, p.image_url, p.name]
+        );
+      } else {
+        await client.query(
+          `INSERT INTO products (name, description, price, stock_quantity, category_id, image_url, is_active)
+           VALUES ($1, $2, $3, $4, $5, $6, true)`,
+          [p.name, p.description, p.price, p.stock_quantity, p.category_id, p.image_url]
+        );
+      }
     }
 
     logger.info('Database seeded successfully!');

@@ -17,9 +17,9 @@ describe('CartItem Component', () => {
   const mockItem = {
     product_id: 1,
     name: 'Mechanical Gaming Keyboard',
-    price: 89.99,
+    price: 2499.00,
     quantity: 2,
-    subtotal: 179.98,
+    subtotal: 4998.00,
     stock_quantity: 10,
     image_url: 'https://example.com/keyboard.jpg',
   };
@@ -34,8 +34,8 @@ describe('CartItem Component', () => {
     );
 
     expect(screen.getByText('Mechanical Gaming Keyboard')).toBeInTheDocument();
-    expect(screen.getByText('₹89.99 each')).toBeInTheDocument();
+    expect(screen.getByText('₹2499.00 each')).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument();
-    expect(screen.getByText('₹179.98')).toBeInTheDocument();
+    expect(screen.getByText('₹4998.00')).toBeInTheDocument();
   });
 });

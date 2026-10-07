@@ -22,7 +22,7 @@ describe('ProductCard Component', () => {
     id: 1,
     name: 'Wireless Noise-Cancelling Headphones',
     description: 'Crisp sound with active ANC.',
-    price: 199.99,
+    price: 3499.00,
     stock_quantity: 15,
     category_name: 'Electronics',
     image_url: 'https://example.com/headphones.jpg',
@@ -43,7 +43,7 @@ describe('ProductCard Component', () => {
     );
 
     expect(screen.getByText('Wireless Noise-Cancelling Headphones')).toBeInTheDocument();
-    expect(screen.getByText('₹199.99')).toBeInTheDocument();
+    expect(screen.getByText('₹3499.00')).toBeInTheDocument();
     expect(screen.getByText('Electronics')).toBeInTheDocument();
     expect(screen.getByText('15 available')).toBeInTheDocument();
   });
