@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ShoppingBag,
-  ArrowRight,
   ShieldCheck,
   Truck,
   Flame,
   Star,
-  Copy,
-  Check,
-  Tag,
   ArrowUpRight
 } from 'lucide-react';
 import { fetchProducts, setPage, setFilter } from '../store/slices/productSlice';
@@ -32,7 +28,7 @@ const COLLECTIONS = [
     title: 'Modern Apparel & Atelier',
     subtitle: 'Heavyweight organic cottons & denim',
     category: 'Clothing',
-    image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&auto=format&fit=crop&q=80',
     tag: 'NEW IN'
   },
   {
@@ -81,8 +77,6 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const { products, pagination, isLoading, error, filters } = useSelector((state) => state.products);
 
-  const [copiedCode, setCopiedCode] = useState(false);
-
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch, filters.page]);
@@ -104,12 +98,6 @@ const HomePage = () => {
     }
   };
 
-  const copyPromoCode = () => {
-    navigator.clipboard?.writeText('NOVA20');
-    setCopiedCode(true);
-    setTimeout(() => setCopiedCode(false), 2000);
-  };
-
   return (
     <div className="space-y-16">
       {/* Hero Section */}
@@ -122,7 +110,7 @@ const HomePage = () => {
             <div className="flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-violet-500/20 text-violet-300 border border-violet-500/30">
                 <Flame size={14} className="text-amber-400" />
-                SPRING / SUMMER '26 EDIT
+                VERIFIED AUTHENTIC MARKETPLACE
               </span>
               <span className="inline-flex items-center gap-1.5 text-xs text-slate-300 font-medium">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -141,26 +129,8 @@ const HomePage = () => {
               Discover verified acoustics, designer apparel, and studio essentials engineered with obsessive craftsmanship and rapid courier dispatch.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a
-                href="#catalog"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-violet-600 hover:bg-violet-500 text-white font-bold rounded-xl shadow-lg shadow-violet-600/30 transition-all hover:scale-[1.02]"
-              >
-                <span>Shop Latest Drops</span>
-                <ArrowRight size={18} />
-              </a>
-              <button
-                onClick={copyPromoCode}
-                className="inline-flex items-center gap-2 px-5 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl border border-slate-700 transition-colors"
-              >
-                <Tag size={16} className="text-pink-400" />
-                <span>{copiedCode ? 'Copied "NOVA20"!' : '20% Off: NOVA20'}</span>
-                {copiedCode ? <Check size={16} className="text-emerald-400" /> : <Copy size={15} />}
-              </button>
-            </div>
-
             {/* Credibility Strip */}
-            <div className="pt-6 border-t border-slate-800 flex flex-wrap items-center gap-6 text-xs text-slate-400 font-medium">
+            <div className="pt-4 border-t border-slate-800 flex flex-wrap items-center gap-6 text-xs text-slate-400 font-medium">
               <div className="flex items-center gap-1.5">
                 <div className="flex text-amber-400">
                   <Star size={14} className="fill-amber-400" />
@@ -185,16 +155,17 @@ const HomePage = () => {
           </div>
 
           {/* Hero Side Cards */}
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+          <div className="lg:col-span-5 grid grid-cols-1 gap-4">
             <div
               onClick={() => handleCollectionClick('Electronics')}
-              className="group relative rounded-2xl overflow-hidden border border-slate-800 cursor-pointer shadow-md bg-slate-800/80 h-44 flex flex-col justify-end p-5 transition-transform hover:scale-[1.02]"
+              className="group relative rounded-2xl overflow-hidden border border-slate-700/60 cursor-pointer shadow-md bg-slate-800 h-44 flex flex-col justify-end p-5 transition-transform hover:scale-[1.02]"
             >
               <img
                 src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80"
                 alt="Acoustic Flagships"
-                className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-50 group-hover:scale-105 transition-all duration-300"
+                className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-60 group-hover:scale-105 transition-all duration-300"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent"></div>
               <div className="relative z-10 space-y-1">
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
                   Spotlight Drop
@@ -209,19 +180,20 @@ const HomePage = () => {
 
             <div
               onClick={() => handleCollectionClick('Clothing')}
-              className="group relative rounded-2xl overflow-hidden border border-slate-800 cursor-pointer shadow-md bg-slate-800/80 h-44 flex flex-col justify-end p-5 transition-transform hover:scale-[1.02]"
+              className="group relative rounded-2xl overflow-hidden border border-slate-700/60 cursor-pointer shadow-md bg-slate-800 h-44 flex flex-col justify-end p-5 transition-transform hover:scale-[1.02]"
             >
               <img
-                src="https://images.unsplash.com/photo-1542272604-780c96856592?w=800&auto=format&fit=crop&q=80"
+                src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&auto=format&fit=crop&q=80"
                 alt="Minimalist Denim"
-                className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-50 group-hover:scale-105 transition-all duration-300"
+                className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-60 group-hover:scale-105 transition-all duration-300"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent"></div>
               <div className="relative z-10 space-y-1">
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-pink-400 bg-pink-400/10 px-2 py-0.5 rounded border border-pink-400/20">
                   New Atelier
                 </span>
                 <h3 className="text-lg font-bold text-white flex items-center justify-between">
-                  <span>Minimalist Denim & Tees</span>
+                  <span>Minimalist Denim &amp; Tees</span>
                   <ArrowUpRight size={18} className="text-slate-400 group-hover:text-white transition-colors" />
                 </h3>
                 <p className="text-xs text-slate-300">Heavyweight 100% organic cotton</p>
@@ -233,14 +205,9 @@ const HomePage = () => {
 
       {/* Curated Categories Showcase */}
       <section className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-violet-600">Curated Categories</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-1">Shop by Aesthetic & Purpose</h2>
-          </div>
-          <p className="text-sm text-slate-500 max-w-md">
-            Explore curated design collections tailored for modern tech, streetwear, and lifestyle.
-          </p>
+        <div>
+          <span className="text-xs font-bold uppercase tracking-wider text-violet-600">Curated Categories</span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-1">Shop by Aesthetic &amp; Purpose</h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -248,7 +215,7 @@ const HomePage = () => {
             <div
               key={col.id}
               onClick={() => handleCollectionClick(col.category)}
-              className="group relative h-80 rounded-2xl overflow-hidden cursor-pointer shadow-sm border border-slate-200 bg-slate-900 flex flex-col justify-end p-6"
+              className="group relative h-80 rounded-2xl overflow-hidden cursor-pointer shadow-sm border border-slate-200 bg-slate-900 flex flex-col justify-end p-6 transition-transform hover:scale-[1.02]"
             >
               <img
                 src={col.image}
@@ -257,16 +224,12 @@ const HomePage = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
               
-              <div className="relative z-10 space-y-2">
+              <div className="relative z-10 space-y-1.5">
                 <span className="inline-block text-[10px] font-bold uppercase tracking-wider bg-white/20 backdrop-blur text-white px-2.5 py-0.5 rounded-full">
                   {col.tag}
                 </span>
                 <h3 className="text-lg font-bold text-white leading-snug">{col.title}</h3>
-                <p className="text-xs text-slate-300 line-clamp-1">{col.subtitle}</p>
-                <div className="pt-2 flex items-center gap-1 text-xs font-semibold text-violet-300 group-hover:text-white transition-colors">
-                  <span>Browse {col.category}</span>
-                  <ArrowRight size={14} />
-                </div>
+                <p className="text-xs text-slate-300 line-clamp-2">{col.subtitle}</p>
               </div>
             </div>
           ))}
@@ -275,14 +238,9 @@ const HomePage = () => {
 
       {/* Complete Product Catalog */}
       <section id="catalog" className="space-y-6 pt-4">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-violet-600">The Complete Catalog</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-1">Explore All Drops</h2>
-          </div>
-          <p className="text-sm text-slate-500 max-w-md">
-            Live inventory with instant category filtering, price adjustments, and real-time stock status.
-          </p>
+        <div>
+          <span className="text-xs font-bold uppercase tracking-wider text-violet-600">The Complete Catalog</span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-1">Explore All Drops</h2>
         </div>
 
         {/* Filters */}
