@@ -16,7 +16,8 @@ E-Commerce-Platform/
 │   ├── END_TO_END_FLOW.md                  # Complete trace: Frontend ➔ REST API ➔ Backend ➔ DB
 │   ├── DEPLOYMENT_GUIDE.md                 # Production deployment (Vercel, Render, Docker & VPS)
 │   ├── INTERVIEW_PREPARATION_GUIDE.md      # Full interview pitch, Q&A playbook & counter-questions
-│   └── ADVANCED_IMPROVEMENTS_AND_SCALING.md# Bespoke UI, structured logging, scaling & Tailwind
+│   ├── ADVANCED_IMPROVEMENTS_AND_SCALING.md# Bespoke UI, structured logging, scaling & Tailwind
+│   └── MCP_LEARNING_AND_INTEGRATION_GUIDE.md# Model Context Protocol (MCP) server & tutorial
 │
 ├── backend/                  # Production Express + PostgreSQL Backend
 │   ├── src/

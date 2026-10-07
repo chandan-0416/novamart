@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "novamart-tools": {
+      "command": "node",
+      "args": [
+        "c:/Users/chand/OneDrive/Desktop/E-Commerce-Platform/backend/src/mcp/novamartMcpServer.js"
+      ],
+      "env": {
+        "DATABASE_URL": "postgresql://postgres.kutpcoyfukvvwewwxmmm:%2312Quasar-0411@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
+      }
+    }
+  }
+}
