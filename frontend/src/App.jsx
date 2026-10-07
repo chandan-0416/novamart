@@ -30,9 +30,9 @@ function App() {
   }, [dispatch, isAuthenticated]);
 
   return (
-    <div className="app-container">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-indigo-500 selection:text-white">
       <Navbar />
-      <main className="main-content">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<HomePage />} />

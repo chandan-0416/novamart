@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LogIn, Key, Mail, ShieldAlert, Sparkles, UserCheck } from 'lucide-react';
 import { loginUser, clearAuthError } from '../store/slices/authSlice';
-import './Pages.css';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -49,70 +48,78 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="auth-page-container animate-fade-in">
-      <div className="auth-card glass-card">
-        <div className="auth-card-header">
-          <div className="brand-icon-box" style={{ margin: '0 auto 12px' }}>
-            <LogIn size={20} />
+    <div className="max-w-md mx-auto py-8">
+      <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm space-y-6">
+        <div className="text-center space-y-2">
+          <div className="w-12 h-12 rounded-2xl bg-violet-50 text-violet-600 flex items-center justify-center mx-auto">
+            <LogIn size={22} />
           </div>
-          <h2 className="auth-title">Welcome Back</h2>
-          <p className="auth-subtitle">Sign in to manage orders, checkout, or configure products</p>
+          <h2 className="text-2xl font-extrabold text-slate-900">Welcome Back</h2>
+          <p className="text-xs text-slate-500">Sign in to manage orders, checkout, or configure products</p>
         </div>
 
         {error && (
-          <div className="auth-error-banner">
-            <ShieldAlert size={18} />
+          <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium">
+            <ShieldAlert size={16} className="flex-shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
-        {/* Demo Credentials Quick Fill Buttons */}
-        <div className="demo-credentials-box">
-          <div className="demo-header">
-            <Sparkles size={14} />
-            <span>Quick Demo Credentials</span>
+        {/* Quick Demo Credentials */}
+        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2.5">
+          <div className="flex items-center gap-1.5 text-slate-700 text-xs font-bold">
+            <Sparkles size={14} className="text-amber-500" />
+            <span>Quick Demo One-Click Login</span>
           </div>
-          <div className="demo-buttons-row">
-            <button type="button" onClick={fillDemoCustomer} className="demo-fill-btn customer">
-              <UserCheck size={14} />
-              <span>Customer Demo</span>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={fillDemoCustomer}
+              className="flex items-center justify-center gap-1.5 py-2 px-3 bg-white hover:bg-slate-100 text-slate-800 rounded-xl border border-slate-200 text-xs font-semibold shadow-sm transition-colors"
+            >
+              <UserCheck size={14} className="text-violet-600" />
+              <span>Customer</span>
             </button>
-            <button type="button" onClick={fillDemoAdmin} className="demo-fill-btn admin">
-              <Key size={14} />
+            <button
+              type="button"
+              onClick={fillDemoAdmin}
+              className="flex items-center justify-center gap-1.5 py-2 px-3 bg-white hover:bg-slate-100 text-slate-800 rounded-xl border border-slate-200 text-xs font-semibold shadow-sm transition-colors"
+            >
+              <Key size={14} className="text-pink-600" />
               <span>Admin Demo</span>
             </button>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          <div className="form-group">
-            <label htmlFor="email">Email Address</label>
-            <div className="input-with-icon">
-              <Mail className="input-icon" size={18} />
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">Email Address</label>
+            <div className="relative">
+              <Mail className="absolute left-3.5 top-3 text-slate-400" size={16} />
               <input
-                id="email"
                 type="email"
                 name="email"
                 required
                 placeholder="name@example.com"
                 value={formData.email}
                 onChange={handleChange}
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white"
               />
             </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <div className="input-with-icon">
-              <Key className="input-icon" size={18} />
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">Password</label>
+            <div className="relative">
+              <Key className="absolute left-3.5 top-3 text-slate-400" size={16} />
               <input
-                id="password"
                 type="password"
                 name="password"
                 required
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white"
               />
             </div>
           </div>
@@ -120,19 +127,17 @@ const LoginPage = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="btn btn-primary btn-block auth-submit-btn"
+            className="w-full py-3.5 bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-violet-500/20 transition-all"
           >
             {isLoading ? 'Authenticating...' : 'Sign In'}
           </button>
         </form>
 
-        <div className="auth-footer">
-          <p>
-            Don't have an account?{' '}
-            <Link to="/register" className="auth-switch-link">
-              Create an account
-            </Link>
-          </p>
+        <div className="text-center pt-2 text-xs text-slate-500">
+          <span>Don't have an account? </span>
+          <Link to="/register" className="font-bold text-violet-600 hover:text-violet-700 underline">
+            Create an account
+          </Link>
         </div>
       </div>
     </div>

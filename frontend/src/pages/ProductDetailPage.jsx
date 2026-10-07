@@ -15,7 +15,6 @@ import {
 import { fetchProductById, clearSelectedProduct } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
 import { LoadingSpinner, ErrorMessage } from '../components/common/LoadingSpinner';
-import './Pages.css';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -62,20 +61,23 @@ const ProductDetailPage = () => {
   const isOutOfStock = selectedProduct.stock_quantity <= 0;
 
   return (
-    <div className="product-detail-page animate-fade-in">
-      {/* Breadcrumb / Back Link */}
-      <Link to="/" className="back-link">
-        <ArrowLeft size={18} />
+    <div className="space-y-6 max-w-6xl mx-auto">
+      {/* Back Link */}
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+      >
+        <ArrowLeft size={16} />
         <span>Back to Catalog</span>
       </Link>
 
-      <div className="product-detail-grid">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm">
         {/* Left: Product Image */}
-        <div className="detail-image-box glass-card">
+        <div className="aspect-square rounded-2xl bg-slate-100 overflow-hidden border border-slate-100 flex items-center justify-center">
           <img
             src={selectedProduct.image_url || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&auto=format&fit=crop&q=80'}
             alt={selectedProduct.name}
-            className="detail-main-img"
+            className="w-full h-full object-cover object-center"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&auto=format&fit=crop&q=80';
@@ -84,47 +86,55 @@ const ProductDetailPage = () => {
         </div>
 
         {/* Right: Product Purchase Info */}
-        <div className="detail-info-box glass-card">
-          {selectedProduct.category_name && (
-            <span className="badge badge-customer">{selectedProduct.category_name}</span>
-          )}
+        <div className="flex flex-col justify-between space-y-6">
+          <div className="space-y-4">
+            {selectedProduct.category_name && (
+              <span className="inline-block text-xs font-bold uppercase tracking-wider text-violet-600 bg-violet-50 px-3 py-1 rounded-full">
+                {selectedProduct.category_name}
+              </span>
+            )}
 
-          <h1 className="detail-title">{selectedProduct.name}</h1>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              {selectedProduct.name}
+            </h1>
 
-          <div className="detail-price-row">
-            <span className="detail-price">${parseFloat(selectedProduct.price).toFixed(2)}</span>
-            <div className={`stock-badge ${isOutOfStock ? 'out-of-stock' : 'in-stock'}`}>
-              <Package size={14} />
-              <span>{isOutOfStock ? 'Out of Stock' : `${selectedProduct.stock_quantity} Units in Stock`}</span>
+            <div className="flex items-center gap-4">
+              <span className="text-3xl font-extrabold text-slate-900">
+                ${parseFloat(selectedProduct.price).toFixed(2)}
+              </span>
+              <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
+                isOutOfStock ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+              }`}>
+                <Package size={14} />
+                <span>{isOutOfStock ? 'Out of Stock' : `${selectedProduct.stock_quantity} Units in Stock`}</span>
+              </div>
+            </div>
+
+            <div className="border-t border-slate-100 pt-4">
+              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">Description</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                {selectedProduct.description || 'No detailed description provided for this product.'}
+              </p>
             </div>
           </div>
 
-          <div className="detail-divider" />
-
-          <div className="detail-description-section">
-            <h3>Description</h3>
-            <p>{selectedProduct.description || 'No detailed description provided for this product.'}</p>
-          </div>
-
-          <div className="detail-divider" />
-
-          {/* Quantity and Add to Cart Section */}
-          <div className="detail-actions-section">
-            <div className="quantity-picker-row">
-              <label>Quantity:</label>
-              <div className="cart-item-quantity-stepper">
+          {/* Quantity and Actions */}
+          <div className="space-y-4 pt-4 border-t border-slate-100">
+            <div className="flex items-center gap-4">
+              <label className="text-xs font-bold text-slate-700 uppercase">Quantity:</label>
+              <div className="inline-flex items-center border border-slate-200 rounded-xl bg-slate-50 p-1">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   disabled={quantity <= 1 || isOutOfStock}
-                  className="qty-btn"
+                  className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center text-slate-700 hover:bg-slate-100 disabled:opacity-40"
                 >
                   <Minus size={14} />
                 </button>
-                <span className="qty-value">{quantity}</span>
+                <span className="w-10 text-center text-sm font-bold text-slate-800">{quantity}</span>
                 <button
                   onClick={() => setQuantity(Math.min(selectedProduct.stock_quantity, quantity + 1))}
                   disabled={quantity >= selectedProduct.stock_quantity || isOutOfStock}
-                  className="qty-btn"
+                  className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center text-slate-700 hover:bg-slate-100 disabled:opacity-40"
                 >
                   <Plus size={14} />
                 </button>
@@ -134,37 +144,43 @@ const ProductDetailPage = () => {
             <button
               onClick={handleAddToCart}
               disabled={isOutOfStock || isAdding}
-              className={`btn btn-primary btn-block detail-add-btn ${isSuccess ? 'btn-success-active' : ''}`}
+              className={`w-full py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all ${
+                isSuccess
+                  ? 'bg-emerald-600 text-white'
+                  : isOutOfStock
+                  ? 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
+                  : 'bg-violet-600 hover:bg-violet-700 text-white shadow-violet-500/25'
+              }`}
             >
               {isSuccess ? (
                 <>
-                  <Check size={20} />
+                  <Check size={18} />
                   <span>Added to Cart!</span>
                 </>
               ) : isAdding ? (
                 <span>Adding to Cart...</span>
               ) : (
                 <>
-                  <ShoppingCart size={20} />
+                  <ShoppingCart size={18} />
                   <span>{isOutOfStock ? 'Sold Out' : `Add ${quantity} to Cart`}</span>
                 </>
               )}
             </button>
-          </div>
 
-          {/* Guarantees */}
-          <div className="detail-features-grid">
-            <div className="feature-pill">
-              <Truck size={16} />
-              <span>Free Delivery on orders over $100</span>
-            </div>
-            <div className="feature-pill">
-              <ShieldCheck size={16} />
-              <span>2-Year Manufacturer Warranty</span>
-            </div>
-            <div className="feature-pill">
-              <RotateCcw size={16} />
-              <span>30-Day Hassle Free Returns</span>
+            {/* Badges */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-slate-600 text-xs font-medium">
+                <Truck size={16} className="text-violet-600 flex-shrink-0" />
+                <span>Free Shipping &gt;$100</span>
+              </div>
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-slate-600 text-xs font-medium">
+                <ShieldCheck size={16} className="text-emerald-600 flex-shrink-0" />
+                <span>2-Year Warranty</span>
+              </div>
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-slate-600 text-xs font-medium">
+                <RotateCcw size={16} className="text-pink-600 flex-shrink-0" />
+                <span>30-Day Returns</span>
+              </div>
             </div>
           </div>
         </div>

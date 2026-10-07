@@ -1,19 +1,27 @@
 import axios from 'axios';
 
-// Cross-environment API base URL (Vite + Jest compatible)
+// Cross-environment API base URL with automatic production fallback
 let API_BASE_URL = 'http://localhost:5000/api/v1';
+
 try {
-  if (typeof process !== 'undefined' && process.env && process.env.VITE_API_BASE_URL) {
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_BASE_URL) {
+    API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  } else if (typeof process !== 'undefined' && process.env && process.env.VITE_API_BASE_URL) {
     API_BASE_URL = process.env.VITE_API_BASE_URL;
+  } else if (typeof window !== 'undefined' && window.location && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    // Production default when deployed on Vercel or cloud host
+    API_BASE_URL = 'https://novamart-backend-2zmo.onrender.com/api/v1';
   }
-} catch (e) {}
+} catch (e) {
+  API_BASE_URL = 'https://novamart-backend-2zmo.onrender.com/api/v1';
+}
 
 const axiosClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000,
+  timeout: 15000,
 });
 
 // Request Interceptor: Attach Access Token
@@ -54,6 +62,7 @@ axiosClient.interceptors.response.use(
       error.response &&
       error.response.status === 401 &&
       !originalRequest._retry &&
+      originalRequest.url &&
       !originalRequest.url.includes('/auth/login') &&
       !originalRequest.url.includes('/auth/register') &&
       !originalRequest.url.includes('/auth/refresh')
@@ -109,9 +118,6 @@ axiosClient.interceptors.response.use(
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
           localStorage.removeItem('user');
-        }
-        if (typeof window !== 'undefined' && window.location) {
-          window.location.href = '/login';
         }
         return Promise.reject(refreshError);
       }

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ShoppingCart, Check, Heart, Star, Sparkles, Zap } from 'lucide-react';
+import { ShoppingCart, Check, Heart, Star, Zap } from 'lucide-react';
 import { addToCart } from '../../store/slices/cartSlice';
-import './Products.css';
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -53,15 +52,15 @@ const ProductCard = ({ product }) => {
   const reviewCount = 24 + ((product.id * 17) % 180);
 
   return (
-    <div className="product-card glass-card animate-fade-in">
-      <Link to={`/products/${product.id}`} className="product-card-link">
+    <div className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-200 flex flex-col">
+      <Link to={`/products/${product.id}`} className="flex flex-col flex-1">
         {/* Product Image Container */}
-        <div className="product-image-box">
+        <div className="relative aspect-square w-full bg-slate-100 overflow-hidden">
           {product.image_url ? (
             <img
               src={product.image_url}
               alt={product.name}
-              className="product-image"
+              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
               loading="lazy"
               onError={(e) => {
                 e.target.onerror = null;
@@ -69,72 +68,81 @@ const ProductCard = ({ product }) => {
               }}
             />
           ) : (
-            <div className="product-image-fallback">
-              <ShoppingCart size={40} className="fallback-icon" />
+            <div className="w-full h-full flex items-center justify-center text-slate-300">
+              <ShoppingCart size={48} />
             </div>
           )}
 
           {/* Floating Badges */}
-          <div className="product-badge-group">
+          <div className="absolute top-3 left-3 flex flex-col gap-1 z-10">
             {discountPercent > 0 && !isOutOfStock && (
-              <span className="badge-deal">-{discountPercent}%</span>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-red-500 text-white shadow-sm">
+                -{discountPercent}%
+              </span>
             )}
             {product.stock_quantity > 0 && product.stock_quantity < 20 && (
-              <span className="badge-trending"><Zap size={11} /> LIMITED</span>
+              <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-white shadow-sm">
+                <Zap size={10} /> LOW STOCK
+              </span>
             )}
           </div>
 
           {/* Wishlist Button */}
           <button
             onClick={toggleWishlist}
-            className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
+            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur hover:bg-white text-slate-600 hover:text-red-500 flex items-center justify-center shadow-sm transition-colors z-10"
             aria-label="Save to wishlist"
-            title="Save to wishlist"
           >
-            <Heart size={16} fill={isWishlisted ? '#f43f5e' : 'none'} color={isWishlisted ? '#f43f5e' : '#ffffff'} />
+            <Heart size={16} fill={isWishlisted ? '#ef4444' : 'none'} color={isWishlisted ? '#ef4444' : 'currentColor'} />
           </button>
 
           {/* Out of Stock Overlay */}
           {isOutOfStock && (
-            <div className="out-of-stock-overlay">
-              <span className="sold-out-badge">Sold Out</span>
+            <div className="absolute inset-0 bg-white/80 backdrop-blur-[2px] flex items-center justify-center z-20">
+              <span className="px-3 py-1 bg-slate-900 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow">
+                Sold Out
+              </span>
             </div>
           )}
         </div>
 
         {/* Product Info Content */}
-        <div className="product-info">
-          {/* Category & Rating Row */}
-          <div className="product-meta-row">
-            {product.category_name && (
-              <span className="product-category-tag">{product.category_name}</span>
-            )}
-            <div className="product-rating-box">
-              <Star size={13} className="star-icon" />
-              <span className="rating-num">{ratingScore}</span>
-              <span className="rating-count">({reviewCount})</span>
+        <div className="p-4 flex flex-col flex-1">
+          {/* Category & Rating */}
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <span className="text-xs font-semibold text-violet-600 uppercase tracking-wider truncate">
+              {product.category_name || 'General'}
+            </span>
+            <div className="flex items-center gap-1 text-slate-500 text-xs">
+              <Star size={13} className="fill-amber-400 text-amber-400" />
+              <span className="font-semibold text-slate-700">{ratingScore}</span>
+              <span className="text-slate-400">({reviewCount})</span>
             </div>
           </div>
 
           {/* Title */}
-          <h3 className="product-title" title={product.name}>
+          <h3 className="font-bold text-slate-900 text-sm leading-snug line-clamp-2 group-hover:text-violet-600 transition-colors mb-1">
             {product.name}
           </h3>
 
-          <p className="product-desc-snippet">
+          <p className="text-xs text-slate-500 line-clamp-2 mb-4 leading-relaxed">
             {product.description || 'Premium craftsmanship and durable design engineered for everyday performance.'}
           </p>
 
           {/* Price & Action Row */}
-          <div className="product-footer">
-            <div className="product-price-box">
-              <div className="price-row">
-                <span className="product-price">${numPrice.toFixed(2)}</span>
+          <div className="mt-auto pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+            <div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-base font-extrabold text-slate-900">
+                  ${numPrice.toFixed(2)}
+                </span>
                 {!isOutOfStock && (
-                  <span className="product-original-price">${originalPrice}</span>
+                  <span className="text-xs text-slate-400 line-through">
+                    ${originalPrice}
+                  </span>
                 )}
               </div>
-              <span className={`stock-status ${isOutOfStock ? 'stock-out' : 'stock-in'}`}>
+              <span className={`text-[11px] font-medium block ${isOutOfStock ? 'text-red-500' : 'text-slate-500'}`}>
                 {isOutOfStock ? 'Out of stock' : `${product.stock_quantity} available`}
               </span>
             </div>
@@ -142,15 +150,16 @@ const ProductCard = ({ product }) => {
             <button
               onClick={handleAddToCart}
               disabled={isOutOfStock || isAdding}
-              className={`product-cart-btn ${isSuccess ? 'success' : ''}`}
+              className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
+                isSuccess
+                  ? 'bg-emerald-600 text-white'
+                  : isOutOfStock
+                  ? 'bg-slate-100 text-slate-300 cursor-not-allowed'
+                  : 'bg-violet-600 text-white hover:bg-violet-700 hover:shadow-sm'
+              }`}
               aria-label="Add to cart"
-              title={isOutOfStock ? 'Out of stock' : 'Add to cart'}
             >
-              {isSuccess ? (
-                <Check size={18} className="btn-icon-success" />
-              ) : (
-                <ShoppingCart size={18} />
-              )}
+              {isSuccess ? <Check size={18} /> : <ShoppingCart size={18} />}
             </button>
           </div>
         </div>

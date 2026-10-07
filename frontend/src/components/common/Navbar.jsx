@@ -15,12 +15,10 @@ import {
   Sparkles,
   Zap,
   Flame,
-  Layers,
-  ArrowUpRight
+  Layers
 } from 'lucide-react';
 import { logoutUser } from '../../store/slices/authSlice';
 import { setFilter, fetchProducts } from '../../store/slices/productSlice';
-import './Navbar.css';
 
 const CATEGORY_TABS = [
   { name: 'All Drops', value: '', icon: Flame },
@@ -67,163 +65,219 @@ const Navbar = () => {
   };
 
   return (
-    <header className="navbar-wrapper">
-      {/* Top Announcement Marquee Strip */}
-      <div className="announcement-bar">
-        <div className="announcement-track">
-          <div className="announcement-content">
-            <span className="announcement-item"><Flame size={13} className="ann-icon text-pink" /> <strong>SUMMER '26 EDIT:</strong> USE CODE <strong className="code-pill">TREND20</strong> FOR 20% OFF ALL DROPS</span>
-            <span className="announcement-separator">•</span>
-            <span className="announcement-item"><Zap size={13} className="ann-icon text-cyan" /> <strong>GLOBAL EXPRESS:</strong> FREE 2-DAY COURIER ON ALL ORDERS OVER $100</span>
-            <span className="announcement-separator">•</span>
-            <span className="announcement-item"><Sparkles size={13} className="ann-icon text-gold" /> <strong>VERIFIED AUTHENTIC:</strong> 100% ORIGINAL DESIGN & 30-DAY EFFORTLESS RETURNS</span>
-            <span className="announcement-separator">•</span>
-            <span className="announcement-item"><Flame size={13} className="ann-icon text-pink" /> <strong>SUMMER '26 EDIT:</strong> USE CODE <strong className="code-pill">TREND20</strong> FOR 20% OFF ALL DROPS</span>
-            <span className="announcement-separator">•</span>
-            <span className="announcement-item"><Zap size={13} className="ann-icon text-cyan" /> <strong>GLOBAL EXPRESS:</strong> FREE 2-DAY COURIER ON ALL ORDERS OVER $100</span>
-            <span className="announcement-separator">•</span>
-            <span className="announcement-item"><Sparkles size={13} className="ann-icon text-gold" /> <strong>VERIFIED AUTHENTIC:</strong> 100% ORIGINAL DESIGN & 30-DAY EFFORTLESS RETURNS</span>
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200">
+      {/* Top Banner Bar */}
+      <div className="bg-slate-900 text-slate-200 text-xs py-2 px-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-violet-500/20 text-violet-300 border border-violet-500/30">
+              NEW RELEASE
+            </span>
+            <span className="hidden sm:inline">Use code <strong className="text-white font-mono bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">NOVA20</strong> for 20% off all orders</span>
+          </div>
+          <div className="flex items-center space-x-4 text-slate-400">
+            <span className="hover:text-slate-200 transition-colors cursor-pointer">Free 2-Day Courier on Orders $100+</span>
+            <span className="hidden md:inline text-slate-600">|</span>
+            <span className="hidden md:inline hover:text-slate-200 transition-colors">100% Authentic Guarantee</span>
           </div>
         </div>
       </div>
 
       {/* Main Navbar */}
-      <div className="navbar-container">
-        {/* Brand Logo */}
-        <Link to="/" className="navbar-brand">
-          <div className="brand-icon-box">
-            <ShoppingBag className="brand-icon" size={20} />
-          </div>
-          <span className="brand-text">
-            Nova<span className="brand-accent">Mart</span>
-          </span>
-          <span className="brand-market-badge">MARKET</span>
-        </Link>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 gap-4">
+          {/* Brand Logo */}
+          <Link to="/" className="flex items-center gap-2.5 flex-shrink-0 group">
+            <div className="w-10 h-10 rounded-xl bg-violet-600 text-white flex items-center justify-center shadow-md shadow-violet-500/20 group-hover:bg-violet-700 transition-colors">
+              <ShoppingBag size={20} />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-extrabold tracking-tight text-slate-900">
+                Nova<span className="text-violet-600">Mart</span>
+              </span>
+              <span className="text-[10px] font-medium uppercase tracking-widest text-slate-400 -mt-1">
+                Marketplace
+              </span>
+            </div>
+          </Link>
 
-        {/* Global Search Bar */}
-        <form className="navbar-search" onSubmit={handleSearchSubmit}>
-          <Search className="search-icon" size={17} />
+          {/* Global Search Bar */}
+          <form onSubmit={handleSearchSubmit} className="hidden md:flex flex-1 max-w-lg relative items-center">
+            <Search className="absolute left-3.5 text-slate-400" size={18} />
+            <input
+              type="text"
+              placeholder="Search drops, tech, clothing, gear..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-10 py-2 bg-slate-100 border border-slate-200 rounded-full text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white transition-all"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('');
+                  dispatch(setFilter({ search: '' }));
+                  dispatch(fetchProducts());
+                }}
+                className="absolute right-3.5 text-slate-400 hover:text-slate-600"
+              >
+                <X size={15} />
+              </button>
+            )}
+          </form>
+
+          {/* Desktop Navigation Actions */}
+          <div className="flex items-center gap-3">
+            <Link
+              to="/"
+              className={`hidden sm:inline-flex text-sm font-semibold px-3 py-2 rounded-lg transition-colors ${
+                location.pathname === '/' ? 'text-violet-600 bg-violet-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
+            >
+              Catalog
+            </Link>
+
+            {isAuthenticated && (
+              <Link
+                to="/orders"
+                className={`hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold px-3 py-2 rounded-lg transition-colors ${
+                  location.pathname === '/orders' ? 'text-violet-600 bg-violet-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                }`}
+              >
+                <PackageCheck size={16} />
+                <span>Orders</span>
+              </Link>
+            )}
+
+            {isAuthenticated && user?.role === 'admin' && (
+              <Link
+                to="/admin"
+                className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg bg-pink-50 text-pink-700 border border-pink-200 hover:bg-pink-100 transition-colors`}
+              >
+                <Shield size={14} />
+                <span>Admin</span>
+              </Link>
+            )}
+
+            {/* Cart Button */}
+            <Link
+              to="/cart"
+              className="relative p-2.5 rounded-full text-slate-700 hover:bg-slate-100 transition-colors"
+              aria-label="Shopping Cart"
+            >
+              <ShoppingCart size={20} />
+              {totalItems > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 bg-violet-600 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+
+            {/* User Profile / Auth State */}
+            {isAuthenticated ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center gap-2 p-1.5 pl-2 pr-3 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-800 transition-colors text-sm font-medium"
+                >
+                  <div className="w-7 h-7 rounded-full bg-violet-600 text-white font-bold flex items-center justify-center text-xs">
+                    {user?.name?.charAt(0).toUpperCase() || 'U'}
+                  </div>
+                  <span className="hidden sm:inline max-w-[100px] truncate">{user?.name}</span>
+                  <ChevronDown size={14} className={`text-slate-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {isDropdownOpen && (
+                  <div
+                    className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <div className="px-4 py-2 border-b border-slate-100">
+                      <p className="text-xs text-slate-400 font-medium">Signed in as</p>
+                      <p className="text-sm font-bold text-slate-900 truncate">{user?.name}</p>
+                      <p className="text-xs text-slate-500 truncate">{user?.email}</p>
+                    </div>
+                    <div className="py-1">
+                      <Link
+                        to="/profile"
+                        className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 font-medium"
+                      >
+                        <User size={16} className="text-slate-400" />
+                        <span>My Profile</span>
+                      </Link>
+                      <Link
+                        to="/orders"
+                        className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 font-medium"
+                      >
+                        <PackageCheck size={16} className="text-slate-400" />
+                        <span>My Orders</span>
+                      </Link>
+                      {user?.role === 'admin' && (
+                        <Link
+                          to="/admin"
+                          className="flex items-center gap-2.5 px-4 py-2 text-sm text-pink-600 hover:bg-pink-50 font-semibold"
+                        >
+                          <Shield size={16} className="text-pink-500" />
+                          <span>Admin Console</span>
+                        </Link>
+                      )}
+                    </div>
+                    <div className="border-t border-slate-100 pt-1">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-medium text-left"
+                      >
+                        <LogOut size={16} />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link
+                  to="/login"
+                  className="text-sm font-semibold px-4 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="text-sm font-semibold px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded-lg shadow-sm shadow-violet-500/20 transition-all hover:shadow"
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+              aria-label="Toggle Menu"
+            >
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Search Field */}
+        <form onSubmit={handleSearchSubmit} className="md:hidden pb-3 relative">
+          <Search className="absolute left-3.5 top-2.5 text-slate-400" size={17} />
           <input
             type="text"
-            placeholder="Search premium electronics, fashion, gear..."
+            placeholder="Search products..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-8 py-2 bg-slate-100 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:bg-white"
           />
-          {searchQuery && (
-            <button
-              type="button"
-              className="search-clear-btn"
-              onClick={() => {
-                setSearchQuery('');
-                dispatch(setFilter({ search: '' }));
-                dispatch(fetchProducts());
-              }}
-            >
-              <X size={14} />
-            </button>
-          )}
         </form>
-
-        {/* Desktop Navigation Actions */}
-        <nav className="navbar-actions">
-          <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
-            Catalog
-          </Link>
-
-          {isAuthenticated && (
-            <Link to="/orders" className={`nav-link ${location.pathname === '/orders' ? 'active' : ''}`}>
-              <PackageCheck size={17} />
-              <span>Orders</span>
-            </Link>
-          )}
-
-          {isAuthenticated && user?.role === 'admin' && (
-            <Link to="/admin" className={`nav-link admin-nav-link ${location.pathname.startsWith('/admin') ? 'active' : ''}`}>
-              <Shield size={17} />
-              <span>Admin</span>
-            </Link>
-          )}
-
-          {/* Cart Icon */}
-          <Link to="/cart" className="cart-btn" aria-label="Shopping Cart">
-            <div className="cart-icon-wrap">
-              <ShoppingCart size={20} />
-              {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
-            </div>
-          </Link>
-
-          {/* User Profile / Auth Actions */}
-          {isAuthenticated ? (
-            <div className="user-dropdown-wrapper">
-              <button
-                className="user-profile-btn"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                aria-expanded={isDropdownOpen}
-              >
-                <div className="user-avatar">
-                  {user?.name?.charAt(0).toUpperCase() || 'U'}
-                </div>
-                <div className="user-details-compact">
-                  <span className="user-name">{user?.name}</span>
-                  {user?.role === 'admin' && <span className="role-pill">Admin</span>}
-                </div>
-                <ChevronDown size={14} className={`dropdown-chevron ${isDropdownOpen ? 'rotate' : ''}`} />
-              </button>
-
-              {isDropdownOpen && (
-                <div className="user-dropdown-menu animate-fade-in" onClick={() => setIsDropdownOpen(false)}>
-                  <div className="dropdown-header">
-                    <p className="dropdown-user-name">{user?.name}</p>
-                    <p className="dropdown-user-email">{user?.email}</p>
-                  </div>
-                  <div className="dropdown-divider" />
-                  <Link to="/profile" className="dropdown-item">
-                    <User size={16} />
-                    <span>My Profile</span>
-                  </Link>
-                  <Link to="/orders" className="dropdown-item">
-                    <PackageCheck size={16} />
-                    <span>My Orders</span>
-                  </Link>
-                  {user?.role === 'admin' && (
-                    <Link to="/admin" className="dropdown-item dropdown-admin-item">
-                      <Shield size={16} />
-                      <span>Admin Dashboard</span>
-                    </Link>
-                  )}
-                  <div className="dropdown-divider" />
-                  <button onClick={handleLogout} className="dropdown-item dropdown-logout-item">
-                    <LogOut size={16} />
-                    <span>Sign Out</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="auth-buttons">
-              <Link to="/login" className="btn btn-secondary btn-sm">
-                Sign In
-              </Link>
-              <Link to="/register" className="btn btn-primary btn-sm">
-                Sign Up
-              </Link>
-            </div>
-          )}
-        </nav>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          className="mobile-menu-toggle"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle navigation menu"
-        >
-          {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
       </div>
 
-      {/* Sub-Navbar Trending Category Strip */}
-      <div className="category-rail-wrapper">
-        <div className="category-rail">
+      {/* Category Pills Rail */}
+      <div className="bg-slate-50 border-t border-slate-200 overflow-x-auto scrollbar-none py-2 px-4">
+        <div className="max-w-7xl mx-auto flex items-center space-x-2">
           {CATEGORY_TABS.map((tab) => {
             const isActive = (!filters?.category && tab.value === '') || filters?.category === tab.value;
             const Icon = tab.icon;
@@ -231,9 +285,13 @@ const Navbar = () => {
               <button
                 key={tab.name}
                 onClick={() => handleCategoryTabClick(tab.value)}
-                className={`rail-tab ${isActive ? 'active' : ''}`}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                  isActive
+                    ? 'bg-slate-900 text-white shadow-sm'
+                    : 'bg-white text-slate-600 hover:bg-slate-200/70 border border-slate-200'
+                }`}
               >
-                <Icon size={13} className="rail-icon" />
+                <Icon size={12} className={isActive ? 'text-violet-400' : 'text-slate-400'} />
                 <span>{tab.name}</span>
               </button>
             );
@@ -241,32 +299,43 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer Menu */}
       {isMenuOpen && (
-        <div className="mobile-drawer animate-fade-in" onClick={() => setIsMenuOpen(false)}>
-          <div className="mobile-drawer-header">
-            <span className="brand-text">Nova<span className="brand-accent">Mart</span></span>
-            <span className="badge badge-customer">Trending Market</span>
-          </div>
-
-          <Link to="/" className="mobile-link">Catalog & Drops</Link>
-          <Link to="/cart" className="mobile-link">Shopping Cart ({totalItems})</Link>
-          
+        <div className="md:hidden bg-white border-t border-slate-200 px-4 py-4 space-y-3" onClick={() => setIsMenuOpen(false)}>
+          <Link to="/" className="block text-sm font-semibold text-slate-800 py-2 border-b border-slate-100">
+            Catalog & All Drops
+          </Link>
+          <Link to="/cart" className="block text-sm font-semibold text-slate-800 py-2 border-b border-slate-100">
+            Shopping Cart ({totalItems})
+          </Link>
           {isAuthenticated ? (
             <>
-              <Link to="/profile" className="mobile-link">My Profile</Link>
-              <Link to="/orders" className="mobile-link">My Orders</Link>
+              <Link to="/profile" className="block text-sm font-semibold text-slate-800 py-2 border-b border-slate-100">
+                My Profile
+              </Link>
+              <Link to="/orders" className="block text-sm font-semibold text-slate-800 py-2 border-b border-slate-100">
+                My Orders
+              </Link>
               {user?.role === 'admin' && (
-                <Link to="/admin" className="mobile-link admin-mobile-link">Admin Dashboard</Link>
+                <Link to="/admin" className="block text-sm font-bold text-pink-600 py-2 border-b border-slate-100">
+                  Admin Console
+                </Link>
               )}
-              <button onClick={handleLogout} className="mobile-link mobile-logout-btn">
+              <button
+                onClick={handleLogout}
+                className="w-full text-left text-sm font-semibold text-red-600 py-2"
+              >
                 Sign Out ({user?.name})
               </button>
             </>
           ) : (
-            <div className="mobile-auth-actions">
-              <Link to="/login" className="btn btn-secondary btn-block">Sign In</Link>
-              <Link to="/register" className="btn btn-primary btn-block">Sign Up</Link>
+            <div className="pt-2 flex flex-col gap-2">
+              <Link to="/login" className="w-full text-center py-2.5 text-sm font-semibold text-slate-700 bg-slate-100 rounded-lg">
+                Sign In
+              </Link>
+              <Link to="/register" className="w-full text-center py-2.5 text-sm font-semibold text-white bg-violet-600 rounded-lg">
+                Sign Up
+              </Link>
             </div>
           )}
         </div>

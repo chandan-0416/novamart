@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Package, Calendar, MapPin, DollarSign, ChevronDown, ChevronUp, ShoppingBag } from 'lucide-react';
+import { MapPin, ChevronDown, ChevronUp, ShoppingBag } from 'lucide-react';
 import { fetchOrders, fetchOrderById } from '../store/slices/orderSlice';
 import { LoadingSpinner, ErrorMessage } from '../components/common/LoadingSpinner';
 import Pagination from '../components/common/Pagination';
-import './Pages.css';
 
 const OrdersPage = () => {
   const dispatch = useDispatch();
@@ -29,13 +28,18 @@ const OrdersPage = () => {
     }
   };
 
-  const getStatusBadgeClass = (status) => {
+  const getStatusBadge = (status) => {
     switch (status) {
-      case 'processing': return 'badge-status-processing';
-      case 'shipped': return 'badge-status-shipped';
-      case 'delivered': return 'badge-status-delivered';
-      case 'cancelled': return 'badge-status-cancelled';
-      default: return 'badge-status-pending';
+      case 'processing':
+        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-200">Processing</span>;
+      case 'shipped':
+        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-purple-50 text-purple-700 border border-purple-200">Shipped</span>;
+      case 'delivered':
+        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200">Delivered</span>;
+      case 'cancelled':
+        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-red-50 text-red-700 border border-red-200">Cancelled</span>;
+      default:
+        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-200">Pending</span>;
     }
   };
 
@@ -48,38 +52,41 @@ const OrdersPage = () => {
   }
 
   return (
-    <div className="orders-page animate-fade-in">
-      <div className="page-header">
-        <h1 className="page-title">Order History</h1>
-        <p className="page-subtitle">Track, view and manage your recent purchases</p>
+    <div className="space-y-8 max-w-4xl mx-auto">
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Order History</h1>
+        <p className="text-xs text-slate-500 mt-1">Track, view and manage your recent purchases</p>
       </div>
 
       {orders.length === 0 ? (
-        <div className="empty-cart-view glass-card">
-          <div className="empty-cart-icon-box">
-            <ShoppingBag size={36} />
+        <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8 shadow-sm max-w-md mx-auto space-y-3">
+          <div className="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
+            <ShoppingBag size={32} />
           </div>
-          <h2>No Orders Found</h2>
-          <p>You have not placed any orders yet.</p>
+          <h2 className="text-lg font-bold text-slate-900">No Orders Found</h2>
+          <p className="text-xs text-slate-500">You have not placed any orders yet.</p>
         </div>
       ) : (
-        <div className="orders-list">
+        <div className="space-y-4">
           {orders.map((order) => {
             const isExpanded = expandedOrderId === order.id;
             const details = orderDetailsMap[order.id];
 
             return (
-              <div key={order.id} className="order-card glass-card">
-                <div className="order-card-header" onClick={() => toggleExpandOrder(order.id)}>
-                  <div className="order-meta-grid">
-                    <div className="meta-col">
-                      <span className="meta-label">Order Reference</span>
-                      <strong className="meta-value">#{order.id}</strong>
+              <div key={order.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all">
+                <div
+                  className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/70 transition-colors"
+                  onClick={() => toggleExpandOrder(order.id)}
+                >
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 flex-1">
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Order Ref</span>
+                      <strong className="text-xs font-mono font-bold text-slate-900">#{order.id}</strong>
                     </div>
 
-                    <div className="meta-col">
-                      <span className="meta-label">Date Placed</span>
-                      <span className="meta-value">
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Date</span>
+                      <span className="text-xs text-slate-700 font-medium">
                         {new Date(order.created_at).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'short',
@@ -88,55 +95,51 @@ const OrdersPage = () => {
                       </span>
                     </div>
 
-                    <div className="meta-col">
-                      <span className="meta-label">Total Amount</span>
-                      <strong className="meta-value text-accent">
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Total</span>
+                      <strong className="text-xs font-bold text-violet-600">
                         ${parseFloat(order.total_amount).toFixed(2)}
                       </strong>
                     </div>
 
-                    <div className="meta-col">
-                      <span className="meta-label">Status</span>
-                      <span className={`badge ${getStatusBadgeClass(order.status)}`}>
-                        {order.status}
-                      </span>
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Status</span>
+                      {getStatusBadge(order.status)}
                     </div>
                   </div>
 
-                  <button className="expand-order-btn" aria-label="Toggle details">
-                    {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <button className="p-2 text-slate-400 hover:text-slate-600 self-end sm:self-center" aria-label="Toggle details">
+                    {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                   </button>
                 </div>
 
                 {/* Expanded Details */}
                 {isExpanded && (
-                  <div className="order-card-body animate-fade-in">
-                    <div className="order-address-box">
-                      <MapPin size={16} className="address-icon" />
+                  <div className="border-t border-slate-100 p-5 bg-slate-50/50 space-y-4 text-xs">
+                    <div className="flex items-start gap-2 text-slate-600">
+                      <MapPin size={15} className="text-slate-400 mt-0.5 flex-shrink-0" />
                       <div>
-                        <strong>Shipping Address: </strong>
+                        <strong className="text-slate-800">Shipping Address: </strong>
                         <span>{order.shipping_address}</span>
                       </div>
                     </div>
 
-                    <h4 className="order-items-heading">Purchased Items</h4>
+                    <h4 className="font-bold text-slate-900 uppercase tracking-wider text-[11px] pt-2">Purchased Items</h4>
 
                     {!details ? (
-                      <LoadingSpinner message="Fetching item details..." />
+                      <LoadingSpinner message="Fetching items..." />
                     ) : (
-                      <div className="order-items-table">
+                      <div className="divide-y divide-slate-200 bg-white rounded-xl border border-slate-200 overflow-hidden">
                         {details.items?.map((item) => (
-                          <div key={item.id || item.product_id} className="order-item-row">
-                            <div className="order-item-title-box">
-                              <span className="item-qty">{item.quantity}x</span>
-                              <span className="item-name">{item.product_name}</span>
+                          <div key={item.id || item.product_id} className="p-3 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <span className="font-bold text-slate-500">{item.quantity}x</span>
+                              <span className="text-slate-800 font-medium">{item.product_name}</span>
                             </div>
-                            <span className="item-unit-price">
-                              ${parseFloat(item.unit_price).toFixed(2)} / unit
-                            </span>
-                            <strong className="item-subtotal">
-                              ${parseFloat(item.subtotal).toFixed(2)}
-                            </strong>
+                            <div className="flex items-center gap-4">
+                              <span className="text-slate-400 text-[11px]">${parseFloat(item.unit_price).toFixed(2)} ea</span>
+                              <strong className="text-slate-900">${parseFloat(item.subtotal).toFixed(2)}</strong>
+                            </div>
                           </div>
                         ))}
                       </div>

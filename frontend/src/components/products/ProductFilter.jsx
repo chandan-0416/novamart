@@ -1,8 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SlidersHorizontal, RotateCcw, ArrowUpDown } from 'lucide-react';
+import { RotateCcw, ArrowUpDown } from 'lucide-react';
 import { setFilter, resetFilters, fetchProducts } from '../../store/slices/productSlice';
-import './Products.css';
 
 const CATEGORIES = [
   'All',
@@ -69,17 +68,23 @@ const ProductFilter = () => {
     return 'newest';
   };
 
+  const hasActiveFilters = filters.search || filters.category || filters.minPrice || filters.maxPrice || filters.sortBy !== 'created_at';
+
   return (
-    <div className="product-filter-container glass-card">
+    <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm mb-8 space-y-4">
       {/* Category Pills */}
-      <div className="filter-categories-scroll">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-none">
         {CATEGORIES.map((cat) => {
           const isSelected = (!filters.category && cat === 'All') || filters.category === cat;
           return (
             <button
               key={cat}
               onClick={() => handleCategoryClick(cat)}
-              className={`category-pill ${isSelected ? 'active' : ''}`}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+                isSelected
+                  ? 'bg-violet-600 text-white shadow-sm'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
             >
               {cat}
             </button>
@@ -88,58 +93,71 @@ const ProductFilter = () => {
       </div>
 
       {/* Filter Toolbar (Price Range + Sorting + Reset) */}
-      <div className="filter-toolbar">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-slate-100">
         {/* Price Form */}
-        <form onSubmit={handlePriceSubmit} className="price-filter-form">
-          <span className="filter-label">Price:</span>
-          <input
-            type="number"
-            name="minPrice"
-            placeholder="Min $"
-            min="0"
-            value={filters.minPrice}
-            onChange={handlePriceChange}
-            className="price-input"
-          />
-          <span className="price-separator">-</span>
-          <input
-            type="number"
-            name="maxPrice"
-            placeholder="Max $"
-            min="0"
-            value={filters.maxPrice}
-            onChange={handlePriceChange}
-            className="price-input"
-          />
-          <button type="submit" className="btn btn-secondary btn-sm filter-apply-btn">
-            Apply
-          </button>
+        <form onSubmit={handlePriceSubmit} className="flex items-center gap-2">
+          <span className="text-xs font-bold text-slate-500 uppercase">Price:</span>
+          <div className="flex items-center gap-1.5">
+            <input
+              type="number"
+              name="minPrice"
+              placeholder="Min $"
+              min="0"
+              value={filters.minPrice}
+              onChange={handlePriceChange}
+              className="w-20 px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-violet-500 focus:bg-white"
+            />
+            <span className="text-slate-400 text-xs">-</span>
+            <input
+              type="number"
+              name="maxPrice"
+              placeholder="Max $"
+              min="0"
+              value={filters.maxPrice}
+              onChange={handlePriceChange}
+              className="w-20 px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-violet-500 focus:bg-white"
+            />
+            <button
+              type="submit"
+              className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold transition-colors"
+            >
+              Apply
+            </button>
+          </div>
         </form>
 
-        {/* Sort Dropdown */}
-        <div className="sort-dropdown-box">
-          <ArrowUpDown size={16} className="sort-icon" />
-          <select
-            value={getCurrentSortValue()}
-            onChange={handleSortChange}
-            className="sort-select"
-            aria-label="Sort products"
-          >
-            <option value="newest">Newest Arrivals</option>
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-            <option value="name_asc">Name: A to Z</option>
-            <option value="stock_desc">Highest Stock</option>
-          </select>
-        </div>
+        <div className="flex items-center gap-2">
+          {/* Sort Dropdown */}
+          <div className="relative flex-1 sm:flex-initial">
+            <div className="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 gap-2">
+              <ArrowUpDown size={14} className="text-slate-400" />
+              <select
+                value={getCurrentSortValue()}
+                onChange={handleSortChange}
+                className="bg-transparent text-xs text-slate-800 font-semibold focus:outline-none cursor-pointer pr-4"
+                aria-label="Sort products"
+              >
+                <option value="newest">Newest Drops</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="name_asc">Name: A to Z</option>
+                <option value="stock_desc">Highest Stock</option>
+              </select>
+            </div>
+          </div>
 
-        {/* Reset Button */}
-        {(filters.search || filters.category || filters.minPrice || filters.maxPrice || filters.sortBy !== 'created_at') && (
-          <button onClick={handleReset} className="reset-filter-btn" title="Reset all filters">
-            <RotateCcw size={16} />
-            <span>Reset</span>
-          </button>
-        )}
+          {/* Reset Button */}
+          {hasActiveFilters && (
+            <button
+              onClick={handleReset}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-lg transition-colors"
+              title="Reset all filters"
+            >
+              <RotateCcw size={13} />
+              <span>Reset</span>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

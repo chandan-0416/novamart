@@ -5,128 +5,145 @@ import {
   ShieldCheck,
   Truck,
   RotateCcw,
-  Sparkles,
-  CreditCard,
   Lock,
-  Globe,
   Instagram,
   Twitter,
   Youtube,
   Github
 } from 'lucide-react';
-import './Footer.css';
 
 const Footer = () => {
   return (
-    <footer className="footer-wrapper">
-      {/* Footer Top Highlights */}
-      <div className="footer-highlights">
-        <div className="highlight-item">
-          <Truck className="highlight-icon text-cyan" size={24} />
-          <div>
-            <h4>Express Global Courier</h4>
-            <p>Fast, tracked shipping with 24h dispatch</p>
-          </div>
-        </div>
-        <div className="highlight-item">
-          <ShieldCheck className="highlight-icon text-emerald" size={24} />
-          <div>
-            <h4>100% Verified Originals</h4>
-            <p>Authenticity guaranteed on every piece</p>
-          </div>
-        </div>
-        <div className="highlight-item">
-          <RotateCcw className="highlight-icon text-pink" size={24} />
-          <div>
-            <h4>30-Day Frictionless Returns</h4>
-            <p>Prepaid return label & instant refund</p>
-          </div>
-        </div>
-        <div className="highlight-item">
-          <Lock className="highlight-icon text-gold" size={24} />
-          <div>
-            <h4>Bank-Grade Security</h4>
-            <p>256-bit SSL encrypted transactions</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Footer Links & Information */}
-      <div className="footer-main">
-        <div className="footer-brand-section">
-          <Link to="/" className="footer-brand">
-            <div className="brand-icon-box small">
-              <ShoppingBag size={18} />
+    <footer className="bg-white border-t border-slate-200 mt-20">
+      {/* Top Value Propositions */}
+      <div className="border-b border-slate-100 py-10 bg-slate-50/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="flex items-start gap-4 p-4 rounded-xl bg-white border border-slate-200/60 shadow-sm">
+              <div className="p-2.5 rounded-lg bg-indigo-50 text-indigo-600">
+                <Truck size={22} />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-sm">Express Courier</h4>
+                <p className="text-xs text-slate-500 mt-0.5">Fast, tracked dispatch on all orders</p>
+              </div>
             </div>
-            <span className="brand-text">Nova<span className="brand-accent">Mart</span></span>
-            <span className="brand-market-badge">MARKET</span>
-          </Link>
-          <p className="footer-tagline">
-            The modern marketplace for curated tech, limited atelier drops, and living essentials. Redefining e-commerce with speed, style, and authenticity.
-          </p>
-          <div className="footer-social-links">
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" className="social-link"><Instagram size={18} /></a>
-            <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="Twitter" className="social-link"><Twitter size={18} /></a>
-            <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube" className="social-link"><Youtube size={18} /></a>
-            <a href="https://github.com" target="_blank" rel="noreferrer" aria-label="GitHub" className="social-link"><Github size={18} /></a>
-          </div>
-        </div>
 
-        <div className="footer-links-grid">
-          <div className="footer-col">
-            <h5>Collections</h5>
-            <ul>
-              <li><Link to="/">Audio & Future Tech</Link></li>
-              <li><Link to="/">Designer Atelier & Denim</Link></li>
-              <li><Link to="/">Living & Studio Sanctuary</Link></li>
-              <li><Link to="/">Athletics & Performance</Link></li>
-              <li><Link to="/">New Arrivals & Drops</Link></li>
-            </ul>
-          </div>
+            <div className="flex items-start gap-4 p-4 rounded-xl bg-white border border-slate-200/60 shadow-sm">
+              <div className="p-2.5 rounded-lg bg-emerald-50 text-emerald-600">
+                <ShieldCheck size={22} />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-sm">100% Authentic</h4>
+                <p className="text-xs text-slate-500 mt-0.5">Verified original manufacturer quality</p>
+              </div>
+            </div>
 
-          <div className="footer-col">
-            <h5>Client Care</h5>
-            <ul>
-              <li><Link to="/orders">Order Tracking & Status</Link></li>
-              <li><Link to="/profile">VIP Membership & Rewards</Link></li>
-              <li><a href="#catalog">Authenticity Guarantee</a></li>
-              <li><a href="#catalog">Shipping & Delivery Rates</a></li>
-              <li><a href="#catalog">Returns & Exchange Portal</a></li>
-            </ul>
-          </div>
+            <div className="flex items-start gap-4 p-4 rounded-xl bg-white border border-slate-200/60 shadow-sm">
+              <div className="p-2.5 rounded-lg bg-pink-50 text-pink-600">
+                <RotateCcw size={22} />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-sm">30-Day Returns</h4>
+                <p className="text-xs text-slate-500 mt-0.5">Hassle-free replacement or refund</p>
+              </div>
+            </div>
 
-          <div className="footer-col">
-            <h5>Market Experience</h5>
-            <ul>
-              <li><span className="footer-badge-pill">Verified Authentic</span></li>
-              <li><span className="footer-badge-pill">Carbon Neutral Delivery</span></li>
-              <li><span className="footer-badge-pill">Curated Luxury Drops</span></li>
-              <li><span className="footer-badge-pill">24/7 VIP Concierge</span></li>
-            </ul>
+            <div className="flex items-start gap-4 p-4 rounded-xl bg-white border border-slate-200/60 shadow-sm">
+              <div className="p-2.5 rounded-lg bg-amber-50 text-amber-600">
+                <Lock size={22} />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-sm">Bank-Grade Security</h4>
+                <p className="text-xs text-slate-500 mt-0.5">256-bit SSL encrypted checkout</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Footer Bottom Bar */}
-      <div className="footer-bottom">
-        <div className="footer-bottom-left">
-          <p>&copy; {new Date().getFullYear()} NovaMart Marketplace Inc. All rights reserved.</p>
-          <div className="footer-legal-links">
-            <a href="#privacy">Privacy Policy</a>
-            <span>•</span>
-            <a href="#terms">Terms of Service</a>
-            <span>•</span>
-            <a href="#cookies">Cookie Preferences</a>
+      {/* Main Footer Links */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
+          <div className="md:col-span-2 space-y-4">
+            <Link to="/" className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-violet-600 text-white flex items-center justify-center">
+                <ShoppingBag size={18} />
+              </div>
+              <span className="text-lg font-extrabold tracking-tight text-slate-900">
+                Nova<span className="text-violet-600">Mart</span>
+              </span>
+            </Link>
+            <p className="text-sm text-slate-500 max-w-sm leading-relaxed">
+              The modern marketplace for curated electronics, apparel, and lifestyle drops. Built for speed, security, and exceptional quality.
+            </p>
+            <div className="flex items-center space-x-3 pt-2">
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors">
+                <Instagram size={17} />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors">
+                <Twitter size={17} />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors">
+                <Youtube size={17} />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors">
+                <Github size={17} />
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">Categories</h4>
+            <ul className="space-y-2.5 text-sm text-slate-600">
+              <li><Link to="/" className="hover:text-violet-600 transition-colors">Electronics & Gear</Link></li>
+              <li><Link to="/" className="hover:text-violet-600 transition-colors">Apparel & Denim</Link></li>
+              <li><Link to="/" className="hover:text-violet-600 transition-colors">Home & Living</Link></li>
+              <li><Link to="/" className="hover:text-violet-600 transition-colors">Sports & Outdoors</Link></li>
+              <li><Link to="/" className="hover:text-violet-600 transition-colors">Books & Media</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">Client Care</h4>
+            <ul className="space-y-2.5 text-sm text-slate-600">
+              <li><Link to="/orders" className="hover:text-violet-600 transition-colors">Order Tracking</Link></li>
+              <li><Link to="/profile" className="hover:text-violet-600 transition-colors">Customer Account</Link></li>
+              <li><a href="#terms" className="hover:text-violet-600 transition-colors">Shipping Rates</a></li>
+              <li><a href="#terms" className="hover:text-violet-600 transition-colors">Return Policy</a></li>
+              <li><a href="#terms" className="hover:text-violet-600 transition-colors">Privacy Notice</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">Security & Trust</h4>
+            <div className="space-y-2 text-xs text-slate-500">
+              <p className="flex items-center gap-1.5 text-slate-700 font-medium">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                PCI-DSS Level 1 Compliant
+              </p>
+              <p className="flex items-center gap-1.5 text-slate-700 font-medium">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                Instant SSL Verification
+              </p>
+              <div className="pt-3 flex flex-wrap gap-1.5">
+                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">VISA</span>
+                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">MASTERCARD</span>
+                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">AMEX</span>
+                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">STRIPE</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Accepted Payment Cards */}
-        <div className="footer-payments-row">
-          <span className="payment-chip">VISA</span>
-          <span className="payment-chip">MASTERCARD</span>
-          <span className="payment-chip">AMEX</span>
-          <span className="payment-chip">APPLE PAY</span>
-          <span className="payment-chip">PAYPAL</span>
+        {/* Copyright */}
+        <div className="border-t border-slate-200 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+          <p>&copy; {new Date().getFullYear()} NovaMart Marketplace Inc. All rights reserved.</p>
+          <div className="flex items-center space-x-6">
+            <a href="#privacy" className="hover:text-slate-900 transition-colors">Privacy Policy</a>
+            <a href="#terms" className="hover:text-slate-900 transition-colors">Terms of Service</a>
+            <a href="#cookies" className="hover:text-slate-900 transition-colors">Cookie Preferences</a>
+          </div>
         </div>
       </div>
     </footer>
