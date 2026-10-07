@@ -4,17 +4,22 @@ import axios from 'axios';
 let API_BASE_URL = 'http://localhost:5000/api/v1';
 
 try {
-  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_BASE_URL) {
-    API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  } else if (typeof process !== 'undefined' && process.env && process.env.VITE_API_BASE_URL) {
+  if (typeof process !== 'undefined' && process.env && process.env.VITE_API_BASE_URL) {
     API_BASE_URL = process.env.VITE_API_BASE_URL;
-  } else if (typeof window !== 'undefined' && window.location && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    // Production default when deployed on Vercel or cloud host
+  }
+} catch (e) {}
+
+try {
+  if (
+    typeof window !== 'undefined' &&
+    window.location &&
+    window.location.hostname &&
+    window.location.hostname !== 'localhost' &&
+    window.location.hostname !== '127.0.0.1'
+  ) {
     API_BASE_URL = 'https://novamart-backend-2zmo.onrender.com/api/v1';
   }
-} catch (e) {
-  API_BASE_URL = 'https://novamart-backend-2zmo.onrender.com/api/v1';
-}
+} catch (e) {}
 
 const axiosClient = axios.create({
   baseURL: API_BASE_URL,

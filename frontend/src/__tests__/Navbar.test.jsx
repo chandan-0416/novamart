@@ -35,9 +35,9 @@ describe('Navbar Component', () => {
       </Provider>
     );
 
-    expect(screen.getByText(/Nova/i)).toBeInTheDocument();
-    expect(screen.getByText(/Mart/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/Search premium electronics/i)).toBeInTheDocument();
+    expect(screen.getByText('Nova')).toBeInTheDocument();
+    expect(screen.getByText('Mart')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Search drops/i)).toBeInTheDocument();
     expect(screen.getByText(/Sign In/i)).toBeInTheDocument();
     expect(screen.getByText(/Sign Up/i)).toBeInTheDocument();
   });
