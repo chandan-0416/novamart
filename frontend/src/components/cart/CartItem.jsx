@@ -41,7 +41,7 @@ const CartItem = ({ item }) => {
         </div>
         <div>
           <h4 className="font-bold text-slate-900 text-sm">{item.name}</h4>
-          <p className="text-xs text-slate-500">${parseFloat(item.price).toFixed(2)} each</p>
+          <p className="text-xs text-slate-500">₹{parseFloat(item.price).toFixed(2)} each</p>
           {item.stock_quantity < item.quantity && (
             <span className="text-[11px] text-red-500 font-semibold">Exceeds available stock ({item.stock_quantity})</span>
           )}
@@ -70,7 +70,7 @@ const CartItem = ({ item }) => {
         </div>
 
         <div className="text-right min-w-[70px]">
-          <span className="text-sm font-extrabold text-slate-900">${parseFloat(item.subtotal).toFixed(2)}</span>
+          <span className="text-sm font-extrabold text-slate-900">₹{parseFloat(item.subtotal).toFixed(2)}</span>
         </div>
 
         <button

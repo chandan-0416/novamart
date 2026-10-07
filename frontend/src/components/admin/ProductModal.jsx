@@ -136,7 +136,7 @@ const ProductModal = ({ isOpen, onClose, productToEdit = null }) => {
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Price ($) *</label>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Price (₹) *</label>
               <input
                 type="number"
                 name="price"

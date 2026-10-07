@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Package,
-  DollarSign,
+  IndianRupee,
   Plus,
   Edit2,
   Trash2,
@@ -70,11 +70,11 @@ const AdminDashboardPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-            <DollarSign size={24} />
+            <IndianRupee size={24} />
           </div>
           <div>
             <span className="text-[10px] uppercase font-bold text-slate-400 block">Total Revenue</span>
-            <span className="text-2xl font-extrabold text-slate-900">${totalRevenue.toFixed(2)}</span>
+            <span className="text-2xl font-extrabold text-slate-900">₹{totalRevenue.toFixed(2)}</span>
           </div>
         </div>
 
@@ -173,7 +173,7 @@ const AdminDashboardPage = () => {
                           </div>
                         </td>
                         <td className="py-3 px-4 text-slate-600">{p.category_name || 'General'}</td>
-                        <td className="py-3 px-4 font-bold text-slate-900">${parseFloat(p.price).toFixed(2)}</td>
+                        <td className="py-3 px-4 font-bold text-slate-900">₹{parseFloat(p.price).toFixed(2)}</td>
                         <td className="py-3 px-4">
                           <span className={p.stock_quantity > 0 ? 'text-emerald-700 font-semibold' : 'text-red-500 font-semibold'}>
                             {p.stock_quantity} units
@@ -255,7 +255,7 @@ const AdminDashboardPage = () => {
                           <div className="text-[10px] text-slate-400">{o.user_email}</div>
                         </td>
                         <td className="py-3 px-4 text-slate-600">{new Date(o.created_at).toLocaleDateString()}</td>
-                        <td className="py-3 px-4 font-bold text-slate-900">${parseFloat(o.total_amount).toFixed(2)}</td>
+                        <td className="py-3 px-4 font-bold text-slate-900">₹{parseFloat(o.total_amount).toFixed(2)}</td>
                         <td className="py-3 px-4 text-slate-600 max-w-[200px] truncate">{o.shipping_address}</td>
                         <td className="py-3 px-4">
                           <select

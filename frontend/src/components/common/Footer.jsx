@@ -5,7 +5,7 @@ import {
   ShieldCheck,
   Truck,
   RotateCcw,
-  Lock,
+  Clock,
   Instagram,
   Twitter,
   Youtube,
@@ -51,11 +51,11 @@ const Footer = () => {
 
             <div className="flex items-start gap-4 p-4 rounded-xl bg-white border border-slate-200/60 shadow-sm">
               <div className="p-2.5 rounded-lg bg-amber-50 text-amber-600">
-                <Lock size={22} />
+                <Clock size={22} />
               </div>
               <div>
-                <h4 className="font-bold text-slate-900 text-sm">Bank-Grade Security</h4>
-                <p className="text-xs text-slate-500 mt-0.5">256-bit SSL encrypted checkout</p>
+                <h4 className="font-bold text-slate-900 text-sm">24/7 Dedicated Care</h4>
+                <p className="text-xs text-slate-500 mt-0.5">Instant assistance & live tracking</p>
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-sm text-slate-500 max-w-sm leading-relaxed">
-              The modern marketplace for curated electronics, apparel, and lifestyle drops. Built for speed, security, and exceptional quality.
+              The modern marketplace for curated electronics, apparel, and lifestyle drops. Built for speed, reliability, and exceptional quality.
             </p>
             <div className="flex items-center space-x-3 pt-2">
               <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors">
@@ -116,21 +116,21 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">Security & Trust</h4>
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">Buyer Protection</h4>
             <div className="space-y-2 text-xs text-slate-500">
               <p className="flex items-center gap-1.5 text-slate-700 font-medium">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
-                PCI-DSS Level 1 Compliant
+                100% Secure Checkout
               </p>
               <p className="flex items-center gap-1.5 text-slate-700 font-medium">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
-                Instant SSL Verification
+                Verified Quality Inspection
               </p>
               <div className="pt-3 flex flex-wrap gap-1.5">
-                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">VISA</span>
-                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">MASTERCARD</span>
-                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">AMEX</span>
-                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">STRIPE</span>
+                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">UPI</span>
+                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">CARDS</span>
+                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">NETBANKING</span>
+                <span className="px-2 py-1 bg-slate-100 text-slate-700 font-semibold text-[10px] rounded border border-slate-200">COD</span>
               </div>
             </div>
           </div>

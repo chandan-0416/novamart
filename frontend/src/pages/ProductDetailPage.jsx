@@ -100,7 +100,7 @@ const ProductDetailPage = () => {
 
             <div className="flex items-center gap-4">
               <span className="text-3xl font-extrabold text-slate-900">
-                ${parseFloat(selectedProduct.price).toFixed(2)}
+                ₹{parseFloat(selectedProduct.price).toFixed(2)}
               </span>
               <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
                 isOutOfStock ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
@@ -171,7 +171,7 @@ const ProductDetailPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
               <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-slate-600 text-xs font-medium">
                 <Truck size={16} className="text-violet-600 flex-shrink-0" />
-                <span>Free Shipping &gt;$100</span>
+                <span>Free Shipping &gt;₹500</span>
               </div>
               <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-slate-600 text-xs font-medium">
                 <ShieldCheck size={16} className="text-emerald-600 flex-shrink-0" />

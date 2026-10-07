@@ -43,7 +43,7 @@ describe('ProductCard Component', () => {
     );
 
     expect(screen.getByText('Wireless Noise-Cancelling Headphones')).toBeInTheDocument();
-    expect(screen.getByText('$199.99')).toBeInTheDocument();
+    expect(screen.getByText('₹199.99')).toBeInTheDocument();
     expect(screen.getByText('Electronics')).toBeInTheDocument();
     expect(screen.getByText('15 available')).toBeInTheDocument();
   });

@@ -134,11 +134,11 @@ const ProductCard = ({ product }) => {
             <div>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-base font-extrabold text-slate-900">
-                  ${numPrice.toFixed(2)}
+                  ₹{numPrice.toFixed(2)}
                 </span>
                 {!isOutOfStock && (
                   <span className="text-xs text-slate-400 line-through">
-                    ${originalPrice}
+                    ₹{originalPrice}
                   </span>
                 )}
               </div>

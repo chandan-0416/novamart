@@ -60,7 +60,7 @@ const CheckoutPage = () => {
           </div>
           <div className="flex justify-between">
             <span className="text-slate-500">Total Paid:</span>
-            <span className="font-bold text-slate-900">${parseFloat(currentOrder.total_amount).toFixed(2)}</span>
+            <span className="font-bold text-slate-900">₹{parseFloat(currentOrder.total_amount).toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-slate-500">Shipping To:</span>
@@ -200,7 +200,7 @@ const CheckoutPage = () => {
             >
               {isLoading
                 ? 'Processing Order...'
-                : `Pay & Place Order ($${(totalAmount + (totalAmount > 100 ? 0 : 9.99)).toFixed(2)})`}
+                : `Pay & Place Order (₹${(totalAmount + (totalAmount > 500 ? 0 : 49.00)).toFixed(2)})`}
             </button>
           </form>
         </div>
@@ -216,7 +216,7 @@ const CheckoutPage = () => {
                     <span className="font-bold text-slate-500">{item.quantity}x</span>
                     <span className="text-slate-800 font-medium truncate max-w-[160px]">{item.name}</span>
                   </div>
-                  <span className="font-bold text-slate-900">${parseFloat(item.subtotal).toFixed(2)}</span>
+                  <span className="font-bold text-slate-900">₹{parseFloat(item.subtotal).toFixed(2)}</span>
                 </div>
               ))}
             </div>

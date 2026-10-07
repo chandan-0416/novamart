@@ -101,7 +101,7 @@ const ProductFilter = () => {
             <input
               type="number"
               name="minPrice"
-              placeholder="Min $"
+              placeholder="Min ₹"
               min="0"
               value={filters.minPrice}
               onChange={handlePriceChange}
@@ -111,7 +111,7 @@ const ProductFilter = () => {
             <input
               type="number"
               name="maxPrice"
-              placeholder="Max $"
+              placeholder="Max ₹"
               min="0"
               value={filters.maxPrice}
               onChange={handlePriceChange}

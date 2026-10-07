@@ -66,23 +66,6 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200">
-      {/* Top Banner Bar */}
-      <div className="bg-slate-900 text-slate-200 text-xs py-2 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-violet-500/20 text-violet-300 border border-violet-500/30">
-              NEW RELEASE
-            </span>
-            <span className="hidden sm:inline">Use code <strong className="text-white font-mono bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">NOVA20</strong> for 20% off all orders</span>
-          </div>
-          <div className="flex items-center space-x-4 text-slate-400">
-            <span className="hover:text-slate-200 transition-colors cursor-pointer">Free 2-Day Courier on Orders $100+</span>
-            <span className="hidden md:inline text-slate-600">|</span>
-            <span className="hidden md:inline hover:text-slate-200 transition-colors">100% Authentic Guarantee</span>
-          </div>
-        </div>
-      </div>
-
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">

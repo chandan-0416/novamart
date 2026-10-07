@@ -98,7 +98,7 @@ const OrdersPage = () => {
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Total</span>
                       <strong className="text-xs font-bold text-violet-600">
-                        ${parseFloat(order.total_amount).toFixed(2)}
+                        ₹{parseFloat(order.total_amount).toFixed(2)}
                       </strong>
                     </div>
 
@@ -137,8 +137,8 @@ const OrdersPage = () => {
                               <span className="text-slate-800 font-medium">{item.product_name}</span>
                             </div>
                             <div className="flex items-center gap-4">
-                              <span className="text-slate-400 text-[11px]">${parseFloat(item.unit_price).toFixed(2)} ea</span>
-                              <strong className="text-slate-900">${parseFloat(item.subtotal).toFixed(2)}</strong>
+                              <span className="text-slate-400 text-[11px]">₹{parseFloat(item.unit_price).toFixed(2)} ea</span>
+                              <strong className="text-slate-900">₹{parseFloat(item.subtotal).toFixed(2)}</strong>
                             </div>
                           </div>
                         ))}

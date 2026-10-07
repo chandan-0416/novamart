@@ -34,8 +34,8 @@ describe('CartItem Component', () => {
     );
 
     expect(screen.getByText('Mechanical Gaming Keyboard')).toBeInTheDocument();
-    expect(screen.getByText('$89.99 each')).toBeInTheDocument();
+    expect(screen.getByText('₹89.99 each')).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument();
-    expect(screen.getByText('$179.98')).toBeInTheDocument();
+    expect(screen.getByText('₹179.98')).toBeInTheDocument();
   });
 });

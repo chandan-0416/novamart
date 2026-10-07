@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 
 const CartSummary = ({ totalAmount, totalItems, showCheckoutButton = true }) => {
-  const shippingCost = totalAmount > 100 || totalAmount === 0 ? 0 : 9.99;
+  const shippingCost = totalAmount > 500 || totalAmount === 0 ? 0 : 49.00;
   const grandTotal = totalAmount + shippingCost;
 
   return (
@@ -13,7 +13,7 @@ const CartSummary = ({ totalAmount, totalItems, showCheckoutButton = true }) => 
       <div className="space-y-3 text-xs text-slate-600">
         <div className="flex justify-between">
           <span>Items Subtotal ({totalItems})</span>
-          <span className="font-semibold text-slate-900">${totalAmount.toFixed(2)}</span>
+          <span className="font-semibold text-slate-900">₹{totalAmount.toFixed(2)}</span>
         </div>
 
         <div className="flex justify-between items-center">
@@ -22,19 +22,19 @@ const CartSummary = ({ totalAmount, totalItems, showCheckoutButton = true }) => 
             {shippingCost === 0 ? (
               <span className="text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded text-[10px]">FREE</span>
             ) : (
-              `$${shippingCost.toFixed(2)}`
+              `₹${shippingCost.toFixed(2)}`
             )}
           </span>
         </div>
 
         <div className="flex justify-between">
           <span>Estimated Sales Tax</span>
-          <span className="font-semibold text-slate-900">$0.00</span>
+          <span className="font-semibold text-slate-900">₹0.00</span>
         </div>
 
         <div className="border-t border-slate-100 pt-3 flex justify-between items-baseline text-sm">
           <span className="font-bold text-slate-900">Total</span>
-          <span className="text-xl font-extrabold text-slate-900">${grandTotal.toFixed(2)}</span>
+          <span className="text-xl font-extrabold text-slate-900">₹{grandTotal.toFixed(2)}</span>
         </div>
       </div>
 
