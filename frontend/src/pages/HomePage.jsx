@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Sparkles,
   ShoppingBag,
   ArrowRight,
-  Zap,
   ShieldCheck,
   Truck,
-  RotateCcw,
   Flame,
   Star,
-  CheckCircle2,
   Copy,
   Check,
   Tag,
@@ -86,27 +82,10 @@ const HomePage = () => {
   const { products, pagination, isLoading, error, filters } = useSelector((state) => state.products);
 
   const [copiedCode, setCopiedCode] = useState(false);
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
-
-  // Live ticking countdown timer for Flash Deal
-  const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 38, seconds: 45 });
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch, filters.page]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
-        if (prev.minutes > 0) return { ...prev, minutes: 59, seconds: 59 };
-        if (prev.hours > 0) return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
-        return { hours: 12, minutes: 0, seconds: 0 };
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   const handlePageChange = (newPage) => {
     dispatch(setPage(newPage));
@@ -129,14 +108,6 @@ const HomePage = () => {
     navigator.clipboard?.writeText('NOVA20');
     setCopiedCode(true);
     setTimeout(() => setCopiedCode(false), 2000);
-  };
-
-  const handleNewsletterSubmit = (e) => {
-    e.preventDefault();
-    if (!newsletterEmail) return;
-    setNewsletterSubscribed(true);
-    setNewsletterEmail('');
-    setTimeout(() => setNewsletterSubscribed(false), 4000);
   };
 
   return (
@@ -260,49 +231,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Trust & Service Highlights */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="flex items-center gap-4 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-          <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
-            <Truck size={24} />
-          </div>
-          <div>
-            <h4 className="font-bold text-slate-900 text-sm">Express Worldwide</h4>
-            <p className="text-xs text-slate-500">Tracked shipping on orders $100+</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-          <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
-            <ShieldCheck size={24} />
-          </div>
-          <div>
-            <h4 className="font-bold text-slate-900 text-sm">100% Authentic</h4>
-            <p className="text-xs text-slate-500">Verified factory genuine goods</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-          <div className="w-12 h-12 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center flex-shrink-0">
-            <RotateCcw size={24} />
-          </div>
-          <div>
-            <h4 className="font-bold text-slate-900 text-sm">30-Day Returns</h4>
-            <p className="text-xs text-slate-500">Effortless exchange or refund</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-          <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
-            <Sparkles size={24} />
-          </div>
-          <div>
-            <h4 className="font-bold text-slate-900 text-sm">VIP Club Perks</h4>
-            <p className="text-xs text-slate-500">Exclusive member reward drops</p>
-          </div>
-        </div>
-      </section>
-
       {/* Curated Categories Showcase */}
       <section className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -342,47 +270,6 @@ const HomePage = () => {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Limited Flash Deal Countdown Banner */}
-      <section className="bg-gradient-to-r from-violet-600 to-indigo-700 rounded-3xl p-6 sm:p-10 text-white shadow-lg flex flex-col lg:flex-row items-center justify-between gap-8">
-        <div className="space-y-2 text-center lg:text-left">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur text-white mb-2">
-            <Zap size={14} className="text-amber-300" /> LIMITED FLASH SALE
-          </div>
-          <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Limited Release Spring Catalog Event</h3>
-          <p className="text-sm text-violet-100 max-w-xl">
-            Save an extra 20% on top electronics, luxury clothing, and home drops during this flash event.
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-center gap-4">
-          <div className="flex items-center gap-2 bg-slate-900/40 backdrop-blur px-4 py-2.5 rounded-2xl border border-white/10">
-            <div className="text-center px-2">
-              <span className="block text-xl font-extrabold font-mono">{String(timeLeft.hours).padStart(2, '0')}</span>
-              <span className="text-[10px] uppercase tracking-wider text-violet-200">Hours</span>
-            </div>
-            <span className="text-xl font-bold text-violet-300">:</span>
-            <div className="text-center px-2">
-              <span className="block text-xl font-extrabold font-mono">{String(timeLeft.minutes).padStart(2, '0')}</span>
-              <span className="text-[10px] uppercase tracking-wider text-violet-200">Mins</span>
-            </div>
-            <span className="text-xl font-bold text-violet-300">:</span>
-            <div className="text-center px-2">
-              <span className="block text-xl font-extrabold font-mono">{String(timeLeft.seconds).padStart(2, '0')}</span>
-              <span className="text-[10px] uppercase tracking-wider text-violet-200">Secs</span>
-            </div>
-          </div>
-
-          <button
-            onClick={copyPromoCode}
-            className="px-5 py-3 bg-white text-slate-900 hover:bg-slate-100 font-bold text-xs uppercase tracking-wider rounded-xl shadow transition-all flex items-center gap-2"
-          >
-            <Tag size={15} className="text-violet-600" />
-            <span>{copiedCode ? 'Code Copied!' : 'Copy Code: NOVA20'}</span>
-            {copiedCode ? <Check size={15} className="text-emerald-600" /> : <Copy size={15} />}
-          </button>
         </div>
       </section>
 
@@ -460,44 +347,6 @@ const HomePage = () => {
             </div>
           ))}
         </div>
-      </section>
-
-      {/* VIP Club Newsletter */}
-      <section className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 text-center shadow-xl max-w-4xl mx-auto space-y-6">
-        <div className="space-y-2">
-          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-pink-500/20 text-pink-300 border border-pink-500/30">
-            <Sparkles size={13} /> VIP DROP ACCESS
-          </span>
-          <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Join the NovaMart VIP Drop Club</h3>
-          <p className="text-sm text-slate-300 max-w-lg mx-auto">
-            Subscribe to receive exclusive invites to secret capsule drops, private discount codes, and 15% off your first purchase.
-          </p>
-        </div>
-
-        <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
-          <input
-            type="email"
-            placeholder="Enter your email address..."
-            value={newsletterEmail}
-            onChange={(e) => setNewsletterEmail(e.target.value)}
-            required
-            className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
-          />
-          <button
-            type="submit"
-            className="w-full sm:w-auto whitespace-nowrap px-6 py-3 bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2"
-          >
-            <span>Unlock 15% Off</span>
-            <ArrowRight size={16} />
-          </button>
-        </form>
-
-        {newsletterSubscribed && (
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 text-xs font-medium">
-            <CheckCircle2 size={16} className="text-emerald-400" />
-            <span>Welcome to the VIP Drop Club! Check your inbox for your 15% promo code.</span>
-          </div>
-        )}
       </section>
     </div>
   );
