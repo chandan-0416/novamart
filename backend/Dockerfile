@@ -1,5 +1,5 @@
 # Production Dockerfile for Express.js Backend
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 

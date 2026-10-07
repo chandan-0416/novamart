@@ -6,6 +6,29 @@ const cartRoutes = require('./cart.routes');
 const orderRoutes = require('./order.routes');
 const db = require('../config/db');
 
+// API Root Welcome & Status
+router.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'NovaMart E-Commerce API is live and operational 🚀',
+    version: '1.0.0',
+    documentation: '/api-docs',
+    apiBase: '/api/v1',
+    endpoints: {
+      products: '/api/v1/products',
+      auth: '/api/v1/auth',
+      cart: '/api/v1/cart',
+      orders: '/api/v1/orders',
+      health: '/api/v1/health'
+    }
+  });
+});
+
+// Support HEAD / for Render / Load Balancer Healthchecks
+router.head('/', (req, res) => {
+  res.status(200).end();
+});
+
 // API Health Check
 router.get('/health', async (req, res) => {
   const dbHealth = await db.checkHealth();
