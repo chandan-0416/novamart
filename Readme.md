@@ -14,7 +14,8 @@ E-Commerce-Platform/
 │   ├── NODE_POSTGRESQL_CONNECTION_GUIDE.md # Production guide: Node.js & PostgreSQL connection
 │   ├── FRONTEND_ARCHITECTURE.md            # React SPA, Redux Toolkit, Axios & Glassmorphism
 │   ├── END_TO_END_FLOW.md                  # Complete trace: Frontend ➔ REST API ➔ Backend ➔ DB
-│   └── DEPLOYMENT_GUIDE.md                 # Production deployment (Vercel, Render, Docker & VPS)
+│   ├── DEPLOYMENT_GUIDE.md                 # Production deployment (Vercel, Render, Docker & VPS)
+│   └── INTERVIEW_PREPARATION_GUIDE.md      # Full interview pitch, Q&A playbook & counter-questions
 │
 ├── backend/                  # Production Express + PostgreSQL Backend
 │   ├── src/
