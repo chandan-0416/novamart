@@ -7,13 +7,18 @@ const ROLES = require('../constants/roles');
 async function seed() {
   logger.info('Starting database seeding...');
 
-  const client = new Client({
-    host: env.DB.HOST,
-    port: env.DB.PORT,
-    user: env.DB.USER,
-    password: env.DB.PASSWORD,
-    database: env.DB.NAME
-  });
+  const clientConfig = env.DB.URL
+    ? { connectionString: env.DB.URL, ssl: { rejectUnauthorized: false } }
+    : {
+        host: env.DB.HOST,
+        port: env.DB.PORT,
+        user: env.DB.USER,
+        password: env.DB.PASSWORD,
+        database: env.DB.NAME,
+        ssl: env.DB.SSL && env.DB.HOST !== 'localhost' ? { rejectUnauthorized: false } : false
+      };
+
+  const client = new Client(clientConfig);
 
   try {
     await client.connect();

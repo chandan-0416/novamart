@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ShoppingCart, Check, AlertCircle } from 'lucide-react';
+import { ShoppingCart, Check, Heart, Star, Sparkles, Zap } from 'lucide-react';
 import { addToCart } from '../../store/slices/cartSlice';
 import './Products.css';
 
@@ -9,8 +9,10 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
+  
   const [isAdding, setIsAdding] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ const ProductCard = ({ product }) => {
       setIsAdding(true);
       await dispatch(addToCart({ productId: product.id, quantity: 1 })).unwrap();
       setIsSuccess(true);
-      setTimeout(() => setIsSuccess(false), 1500);
+      setTimeout(() => setIsSuccess(false), 1600);
     } catch (err) {
       // Handled in state
     } finally {
@@ -35,7 +37,20 @@ const ProductCard = ({ product }) => {
     }
   };
 
+  const toggleWishlist = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsWishlisted(!isWishlisted);
+  };
+
   const isOutOfStock = product.stock_quantity <= 0;
+  const numPrice = parseFloat(product.price);
+  const originalPrice = (numPrice * 1.25).toFixed(2);
+  const discountPercent = Math.round(100 - (numPrice / (numPrice * 1.25)) * 100);
+
+  // Deterministic rating based on product id
+  const ratingScore = (4.7 + ((product.id % 4) * 0.08)).toFixed(1);
+  const reviewCount = 24 + ((product.id * 17) % 180);
 
   return (
     <div className="product-card glass-card animate-fade-in">
@@ -59,31 +74,66 @@ const ProductCard = ({ product }) => {
             </div>
           )}
 
-          {/* Category Tag */}
-          {product.category_name && (
-            <span className="product-category-tag">{product.category_name}</span>
-          )}
+          {/* Floating Badges */}
+          <div className="product-badge-group">
+            {discountPercent > 0 && !isOutOfStock && (
+              <span className="badge-deal">-{discountPercent}%</span>
+            )}
+            {product.stock_quantity > 0 && product.stock_quantity < 20 && (
+              <span className="badge-trending"><Zap size={11} /> LIMITED</span>
+            )}
+          </div>
 
+          {/* Wishlist Button */}
+          <button
+            onClick={toggleWishlist}
+            className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
+            aria-label="Save to wishlist"
+            title="Save to wishlist"
+          >
+            <Heart size={16} fill={isWishlisted ? '#f43f5e' : 'none'} color={isWishlisted ? '#f43f5e' : '#ffffff'} />
+          </button>
+
+          {/* Out of Stock Overlay */}
           {isOutOfStock && (
             <div className="out-of-stock-overlay">
-              <span>Sold Out</span>
+              <span className="sold-out-badge">Sold Out</span>
             </div>
           )}
         </div>
 
-        {/* Product Info */}
+        {/* Product Info Content */}
         <div className="product-info">
+          {/* Category & Rating Row */}
+          <div className="product-meta-row">
+            {product.category_name && (
+              <span className="product-category-tag">{product.category_name}</span>
+            )}
+            <div className="product-rating-box">
+              <Star size={13} className="star-icon" />
+              <span className="rating-num">{ratingScore}</span>
+              <span className="rating-count">({reviewCount})</span>
+            </div>
+          </div>
+
+          {/* Title */}
           <h3 className="product-title" title={product.name}>
             {product.name}
           </h3>
 
           <p className="product-desc-snippet">
-            {product.description || 'Premium craftsmanship and durable design.'}
+            {product.description || 'Premium craftsmanship and durable design engineered for everyday performance.'}
           </p>
 
+          {/* Price & Action Row */}
           <div className="product-footer">
             <div className="product-price-box">
-              <span className="product-price">${parseFloat(product.price).toFixed(2)}</span>
+              <div className="price-row">
+                <span className="product-price">${numPrice.toFixed(2)}</span>
+                {!isOutOfStock && (
+                  <span className="product-original-price">${originalPrice}</span>
+                )}
+              </div>
               <span className={`stock-status ${isOutOfStock ? 'stock-out' : 'stock-in'}`}>
                 {isOutOfStock ? 'Out of stock' : `${product.stock_quantity} available`}
               </span>
@@ -97,7 +147,7 @@ const ProductCard = ({ product }) => {
               title={isOutOfStock ? 'Out of stock' : 'Add to cart'}
             >
               {isSuccess ? (
-                <Check size={18} />
+                <Check size={18} className="btn-icon-success" />
               ) : (
                 <ShoppingCart size={18} />
               )}

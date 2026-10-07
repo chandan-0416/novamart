@@ -8,6 +8,14 @@ A production-grade, full stack e-commerce web platform built with **React.js**, 
 
 ```text
 E-Commerce-Platform/
+├── docs/                     # Technical architecture & engineering guides
+│   ├── DATABASE_ARCHITECTURE.md            # Complete DB, ER model & schema specification
+│   ├── BACKEND_ARCHITECTURE.md             # Multi-tier backend design, pipeline & API catalog
+│   ├── NODE_POSTGRESQL_CONNECTION_GUIDE.md # Production guide: Node.js & PostgreSQL connection
+│   ├── FRONTEND_ARCHITECTURE.md            # React SPA, Redux Toolkit, Axios & Glassmorphism
+│   ├── END_TO_END_FLOW.md                  # Complete trace: Frontend ➔ REST API ➔ Backend ➔ DB
+│   └── DEPLOYMENT_GUIDE.md                 # Production deployment (Vercel, Render, Docker & VPS)
+│
 ├── backend/                  # Production Express + PostgreSQL Backend
 │   ├── src/
 │   │   ├── config/           # Database pool, JWT, Winston logger, Swagger

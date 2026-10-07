@@ -7,11 +7,13 @@ const env = {
   PORT: process.env.PORT || 5000,
   NODE_ENV: process.env.NODE_ENV || 'development',
   DB: {
+    URL: process.env.DATABASE_URL || null,
     HOST: process.env.DB_HOST || 'localhost',
     PORT: parseInt(process.env.DB_PORT || '5432', 10),
     USER: process.env.DB_USER || 'postgres',
     PASSWORD: process.env.DB_PASSWORD || 'postgres',
     NAME: process.env.DB_NAME || 'ecommerce_db',
+    SSL: process.env.DB_SSL === 'true' || Boolean(process.env.DATABASE_URL) || process.env.NODE_ENV === 'production',
     MAX_CONNECTIONS: parseInt(process.env.DB_MAX_CONNECTIONS || '20', 10),
     IDLE_TIMEOUT: parseInt(process.env.DB_IDLE_TIMEOUT_MILLIS || '30000', 10),
     CONNECTION_TIMEOUT: parseInt(process.env.DB_CONNECTION_TIMEOUT_MILLIS || '2000', 10)

@@ -2,16 +2,27 @@ const { Pool } = require('pg');
 const env = require('./env');
 const logger = require('./logger');
 
-const pool = new Pool({
-  host: env.DB.HOST,
-  port: env.DB.PORT,
-  user: env.DB.USER,
-  password: env.DB.PASSWORD,
-  database: env.DB.NAME,
-  max: env.DB.MAX_CONNECTIONS,
-  idleTimeoutMillis: env.DB.IDLE_TIMEOUT,
-  connectionTimeoutMillis: env.DB.CONNECTION_TIMEOUT
-});
+const poolConfig = env.DB.URL
+  ? {
+      connectionString: env.DB.URL,
+      max: env.DB.MAX_CONNECTIONS,
+      idleTimeoutMillis: env.DB.IDLE_TIMEOUT,
+      connectionTimeoutMillis: env.DB.CONNECTION_TIMEOUT,
+      ssl: env.DB.SSL ? { rejectUnauthorized: false } : false
+    }
+  : {
+      host: env.DB.HOST,
+      port: env.DB.PORT,
+      user: env.DB.USER,
+      password: env.DB.PASSWORD,
+      database: env.DB.NAME,
+      max: env.DB.MAX_CONNECTIONS,
+      idleTimeoutMillis: env.DB.IDLE_TIMEOUT,
+      connectionTimeoutMillis: env.DB.CONNECTION_TIMEOUT,
+      ssl: env.DB.SSL && env.DB.HOST !== 'localhost' ? { rejectUnauthorized: false } : false
+    };
+
+const pool = new Pool(poolConfig);
 
 pool.on('connect', () => {
   logger.debug('PostgreSQL client connected to pool');
