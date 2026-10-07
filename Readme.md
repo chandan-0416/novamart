@@ -15,7 +15,8 @@ E-Commerce-Platform/
 │   ├── FRONTEND_ARCHITECTURE.md            # React SPA, Redux Toolkit, Axios & Glassmorphism
 │   ├── END_TO_END_FLOW.md                  # Complete trace: Frontend ➔ REST API ➔ Backend ➔ DB
 │   ├── DEPLOYMENT_GUIDE.md                 # Production deployment (Vercel, Render, Docker & VPS)
-│   └── INTERVIEW_PREPARATION_GUIDE.md      # Full interview pitch, Q&A playbook & counter-questions
+│   ├── INTERVIEW_PREPARATION_GUIDE.md      # Full interview pitch, Q&A playbook & counter-questions
+│   └── ADVANCED_IMPROVEMENTS_AND_SCALING.md# Bespoke UI, structured logging, scaling & Tailwind
 │
 ├── backend/                  # Production Express + PostgreSQL Backend
 │   ├── src/
